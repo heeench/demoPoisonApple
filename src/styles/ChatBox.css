@@ -1,0 +1,141 @@
+@font-face {
+  font-family: 'Vinque';
+  src: url('../assets/Vinque_Rg.woff') format('woff');
+}
+
+.chat-container {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  width: 23%;
+  background-color: #07021a;
+  display: flex;
+  flex-direction: column;
+  border: 2px solid rgb(66, 51, 100);
+  border-radius: 4px;
+  box-shadow: 0 0 10px rgba(80, 49, 9, 0.2);
+}
+
+.chat-messages {
+  height: 87vh;
+  width: 21vw;
+  flex-grow: 1;
+  overflow-y: auto;
+  word-wrap: break-word;
+  font-size: 17px;
+  font-family: 'Vinque';
+  color: azure;
+  border: 2px solid #dcaefd8a;
+  margin-top: 2vh;
+  margin-left: 0.65vw;
+  box-shadow: 0 0 10px rgba(80, 49, 9, 0.2);
+  border-radius: 10px;
+}
+
+.chat-message {
+  padding: 10px;
+}
+
+.chat-messages::-webkit-scrollbar {
+  width: 10px; /* Ширина скроллбара */
+}
+
+.chat-messages::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1); /* Цвет фона трека */
+  border-radius: 10px; /* Скругление углов трека */
+}
+
+.chat-messages::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3); /* Цвет ползунка */
+  border-radius: 10px; /* Скругление углов ползунка */
+}
+
+.chat-messages::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5); /* Цвет ползунка при наведении */
+}
+
+.chat-message {
+  padding-bottom: 7px;
+}
+
+.input-container {
+  font-family: 'Vinque';
+  font-size: 17px;
+  align-items: center; 
+  height: 4vh;
+  border: 2px solid #ccc;
+  border-radius: 22px;
+  width: 70%;
+  bottom: 25px; 
+  left: 10px; 
+  position: absolute;
+  display: flex;
+  box-shadow: 0 0 10px rgba(80, 49, 9, 0.2);
+  margin-left: 5px;
+  padding-left: 10px;
+}
+
+.button {
+  padding: 10px;
+  background-color: #300c46;
+  color: white;
+  border: none;
+  border-radius: 50%; 
+  cursor: pointer;
+  width: 2.5vw; 
+  height: 2.5vw;
+  position: absolute;
+  right: 20px;
+  bottom: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.button:hover {
+  background-color: #3e0144;
+}
+
+.icon-btn {
+  width: 24px; 
+  height: auto; 
+}
+
+.chat-container.collapsed {
+  width: 30px; 
+}
+
+.toggle-button {
+  position: absolute;
+  top: 50%;
+  left: -20px; 
+  transform: translateY(-50%);
+  background-color: #300c4694;
+  border: none;
+  color: white;
+  cursor: pointer;
+  width: 38px; 
+  height: 38px; 
+  border-radius: 50%; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.toggle-button:hover {
+  position: absolute;
+  top: 50%;
+  left: -20px; 
+  transform: translateY(-50%);
+  background-color: #3e0144; 
+  border: none;
+  color: white;
+  cursor: pointer;
+  width: 38px; 
+  height: 38px;  
+  border-radius: 50%; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

@@ -1,0 +1,92 @@
+@font-face {
+    font-family: 'Vinque';
+    src: url('../assets/Vinque_Rg.woff') format('woff');
+  }
+
+.toolbar {
+    background-color: #929fbe9a;
+    width: 110px;
+    height: 95px;
+    padding: 10px;
+    position: fixed;
+    z-index: 1000;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    justify-content: center;
+    align-items: center;
+    border: #8b80e7;
+}
+
+.toolbar button {
+    position: relative;
+    font-family: 'Vinque';
+    font-size: 14px;
+    top: -8px;
+    width: 108%;
+    right: 10px;
+    background-color: #ac93d41f;
+    color: rgb(22, 14, 37);
+    border: none;
+    padding: 5px;
+    box-sizing: inherit;
+}
+
+.toolbar button:hover {
+    background-color: #ac93d4b2;
+}
+
+.Map {
+    padding-left: 10px;
+    padding-top: 5px;
+    background-color: #d3cacab4;
+    position: relative;
+   
+}
+
+.Map .grid {
+  overflow:hidden;
+}
+
+.file-upload-container {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 40px;
+    width: 100%;
+    height: 100%;
+    color: white;
+    top: -2px;
+  }
+  
+  .file-upload-label {
+    display: inline-block;
+    padding: 2px;
+    color: white;
+    border: 2px solid #0f011f;
+    border-radius: 60px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    border-radius: 50%; 
+    cursor: pointer;
+    width: 34px; 
+    height: 34px;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #160136;
+  }
+  
+  .file-upload-label:hover {
+    background-color: #3f0581;
+  }
+  
+  .file-upload-input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    color: white;
+  }

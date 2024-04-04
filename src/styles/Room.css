@@ -1,0 +1,42 @@
+@font-face {
+  font-family: 'Vinque';
+  src: url('../assets/Vinque_Rg.woff') format('woff');
+}
+
+.room-page {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: rgb(255, 255, 255);
+  height: 100%;
+  width: 100%; 
+}
+
+.favicon-room {
+  position: relative;
+  left: 5px;
+  transform: translateY(2px);
+  width: 55px;
+  height: 55px;
+  cursor: pointer;
+  border: 2px solid rgb(0, 0, 0);
+  border-radius: 30px;
+  background-color: #dddcdcef;
+  margin: 5px;
+}
+
+.favicon-room:active {
+  width: 54px;
+  height: 54px;
+}
+
+.dice-area {
+  position: absolute;
+  width: 100%;
+}
+
+
+.header {
+  background-color: #06011be7;
+  border-bottom: 3px solid #11011be7;
+}

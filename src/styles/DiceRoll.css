@@ -1,0 +1,81 @@
+@font-face {
+  font-family: 'Vinque';
+  src: url('../assets/Vinque_Rg.woff') format('woff');
+}
+.dice {
+  position: absolute;
+  top: 50px;
+  left: 50px;
+  width: 20%;
+  margin: 0 10px 10px; 
+  justify-content: center;
+  align-items: center;
+  font-family: 'Vinque';
+}
+
+.menu {
+  position: relative;
+  top:-40px;
+  padding: 5px;
+  font-family: 'Vinque';
+}
+
+#diceCount {
+  width: 30%;
+  border: #0f011f;
+  border-radius: 15px;
+  padding-left: 8px;
+  font-family: 'Vinque';
+  
+}
+
+#diceType {
+  border: #0f011f;
+  border-radius: 15px;
+  font-family: 'Vinque';
+}
+
+.roll {
+  background-color: #2b8df7;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 20px;
+  width: 100%; 
+  height: 30px;
+  position: relative;
+  top: -30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Vinque';
+}
+
+.roll:hover {
+  background-color: #58a5f8;
+}
+
+.d20 {
+  font-size: 20px;
+  
+}
+
+.btn-menu:hover {
+  background-color: #3f0581;
+}
+
+.dd {
+  font-size: 20px;
+}
+
+.btn-menu {
+  padding: 9px;
+  background-color: #160136;
+  color: white;
+  border: none;
+  border-radius: 50%; 
+  cursor: pointer;
+  position: relative;
+  top: -47px;
+  border: 2px solid #0f011f;
+}

@@ -1,0 +1,61 @@
+@font-face {
+  font-family: 'Vinque';
+  src: url('../assets/Vinque_Rg.woff') format('woff');
+}
+
+.navbar-links {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 50px;
+    width: 100%;
+    background-color: #585d699a;
+    color: #fff; 
+    padding: 10px 20px; 
+    z-index: 1000; 
+    font-size: 20px;
+    font-family: 'Vinque';
+  }
+
+  .navbar-links ul {
+    position: absolute;
+    top: 0;
+    right: 100px;
+  }
+
+  .navbar-links li {
+    display: inline-block;
+    transform: translateX(30px);
+    padding-right: 70px;
+  }
+
+  .navbar-links Link {
+    color: #fff; /* Цвет ссылок */
+    text-decoration: none;
+  }
+  
+  .navbar-links Link:hover {
+    color: #00f; /* Цвет ссылок */
+  }
+
+  .navbar-links li:active {
+    color: #f0b0a1;
+    font-size: 18px;
+  }
+
+  ul box-icon{
+    position: absolute;
+    display: inline-block;
+    transform: translate(-35px, 2px);
+  }
+
+  .navbar-links img {
+    transform: translateX(25px);
+    transform: translateY(-6px);
+    width: 60px;
+    cursor: pointer;
+  }
+
+  .navbar-links img:active {
+    width: 58px;
+  }
