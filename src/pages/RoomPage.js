@@ -4,14 +4,77 @@ import ChatBox from "../Room/ChatBox";
 import DicePanel from "../dice/DicePanel";
 import Map from "../Room/Map";
 import { useParams, useNavigate } from "react-router-dom";
+import SockJS from 'sockjs-client';
+import Stomp from 'stompjs';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUserCircle, faSkull } from "@fortawesome/free-solid-svg-icons";
+
 
 
 const RoomPage = () => {
   const { roomId } = useParams();
+  const [user, setUser] = useState([]);
+  const [email, setEmail] = useState();
   const [nickname, setNick] = useState();
   const [accessToken, setAccessToken] = useState('');
+  const [stompClient, setStompClient] = useState(null);
+  const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
   
+
+  useEffect(() => {
+    if (stompClient) {
+      const data = {
+        'nickname': nickname,
+        'email': email, 
+        'roomId': roomId
+      };
+      stompClient.send('/app/users', {}, JSON.stringify(data));
+    }
+    
+  }, [email, nickname, roomId, stompClient]);
+
+  useEffect(() => {
+    const getStompConnection = async () => {
+      const socket = new SockJS('http://localhost:8080/users');
+      const client = Stomp.over(socket);
+
+      client.connect({}, () => {
+        console.log('Connected to WebSocket Users');
+        setStompClient(client);
+      }, error => {
+        console.error('Error connecting to WebSocket Users:', error);
+      });
+
+      return () => {
+        if (client && client.connected) {
+          client.disconnect();
+          console.log('Disconnected from WebSocket Users');
+        }
+      };
+    };
+
+    getStompConnection();
+  }, []);
+
+  useEffect(() => {
+    if (stompClient) {
+      const subscription = stompClient.subscribe(`/topic/users/${roomId}`, (userData) => {
+        try {
+          const nicknames = JSON.parse(userData.body); // Распарсить JSON
+          setUser(prevUser => [...new Set([...prevUser, ...nicknames])]); // Использовать Set для исключения дубликатов
+          console.log('Добавлены никнеймы:', nicknames);
+        } catch (error) {
+          console.error('Ошибка парсинга JSON:', error);
+        }
+      });
+  
+      return () => {
+        subscription.unsubscribe();
+      };
+    }
+  }, [stompClient, roomId]);
+
 
   useEffect(() => {
     const tokenString = localStorage.getItem('access_token');
@@ -45,6 +108,29 @@ const RoomPage = () => {
     }
   }, [accessToken, nickname]);
 
+  useEffect(() => {
+    async function fetchContent() {
+      try {
+        const res = await fetch('http://localhost:8080/api/v1/secured/user/email', {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${accessToken}`
+          },
+        });
+        if (res.ok) {
+          const json = await res.text();
+          setEmail(json);
+        } 
+      } catch (error) {
+        console.error('Произошла ошибка')
+      }
+    }
+  
+    if (accessToken) {
+      fetchContent();
+    }
+  }, [accessToken, email]);
+
   
   useEffect(() => {
     const handleWheel = (e) => {
@@ -65,7 +151,11 @@ const RoomPage = () => {
   const homepage = () => {
     navigate('/user');
   };
-
+  
+  const toggleUsersList = () => {
+    setMenuOpen(!menuOpen);
+    console.log('Полученные данные:', user);
+  };
 
   return (
     <div className="hom"> 
@@ -78,7 +168,22 @@ const RoomPage = () => {
           <Map  roomId={roomId} accessToken={accessToken} />
           </div>
         </div>
-          
+        <div className="users-list">
+          <button className='btn-users-list' onClick={toggleUsersList}>
+            <FontAwesomeIcon className='btn-user-list' icon={faUserCircle} />
+          </button>
+          {menuOpen && (
+            <div className="menu-usr">
+              {user.map((nickname, index) => ( 
+                <div key={index} className="usr">
+                  <FontAwesomeIcon icon={faSkull} className="usr-icon" />
+                  <strong>{nickname}</strong> 
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
         <div className="dice-area">
           <DicePanel nickname={nickname} roomId={roomId}/>
         </div>

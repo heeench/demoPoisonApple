@@ -40,3 +40,49 @@
   background-color: #06011be7;
   border-bottom: 3px solid #11011be7;
 }
+
+.btn-users-list:hover {
+  background-color: #3f0581;
+}
+
+.btn-user-list {
+  font-size: 21px ;
+}
+
+.btn-users-list {
+  padding: 9px;
+  background-color: #160136;
+  color: white;
+  border: none;
+  border-radius: 50%; 
+  cursor: pointer;
+  position: absolute;
+  top: 2px;
+  left: 110px;
+  height: 44px;
+  width: 43px;
+  border: 2px solid #0f011f;
+}
+
+.menu-usr {
+  position: absolute;
+  top:45px;
+  left:130px ;
+  padding: 5px;
+  width: 120px;
+  height: 150px;
+  border-radius: 10px;
+  font-family: 'Vinque';
+  background-color: #4a3e6da9;
+}
+
+.usr {
+  padding: 2px;
+  padding-left: 10px;
+  font-size: 17px;
+  color: #ffffffe5;
+}
+
+.usr-icon {
+  padding-right: 7px;
+}

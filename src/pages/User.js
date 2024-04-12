@@ -133,6 +133,7 @@ const User = () => {
           return;
       }
         try {
+          console.log(roomName)
             const res = await fetch(`http://localhost:8080/api/v1/rooms/create?email=${email}`, {
                 method: 'POST',
                 headers: {
@@ -142,14 +143,10 @@ const User = () => {
                 body: JSON.stringify({ name: roomName, email: email })
             });
             if (res.ok) {
-                console.log(accessToken);
                 fetchRooms();
                 setRoomName('');
                 setIsFormOpen(false);
                 toast.success('Вы успешно создали комнату!');
-            } else {
-                toast.error('Вы не авторизованы! Пожалуйста, войдите в аккаунт');
-                navigate('/signin')
             }
         } catch (error) {
             toast.error('Произошла ошибка при создании комнат');

@@ -174,10 +174,10 @@ const Map = ({ roomId, accessToken }) => {
                     onWheel={(e) => {
                         if (e.evt.ctrlKey) {
                             e.evt.preventDefault();
-                            let newScale = scale + e.evt.deltaY * -0.00001;
+                            let newScale = scale + e.evt.deltaY * -0.001;
     
-                            const minScale = 1.5;
-                            const maxScale = 3.5;
+                            const minScale = 2;
+                            const maxScale = 4;
     
                             newScale = Math.min(maxScale, Math.max(minScale, newScale));
                             setScale(newScale);

@@ -1,17 +1,37 @@
-import { Line, Group } from 'react-konva';
-import '../styles/Grid.css'
 import React, { useState } from 'react';
+import { Group, Line } from 'react-konva';
 
 const GridLines = ({ windowWidth, windowHeight, scale }) => {
-    const [strokeWidth, setStrokeWidth] = useState(1);
+    const [strokeWidth, setStrokeWidth] = useState(0.2);
     const scaledWidth = windowWidth * scale;
     const scaledHeight = windowHeight * scale;
-
-    const numberOfLines = 50;
 
     const handleChange = (event, newValue) => {
         setStrokeWidth(newValue);
     };
+
+    // Размер квадрата в пикселях
+    const squareSize = 5 * scale;  // 5 футов
+
+    // Генерация вертикальных линий
+    const verticalLines = Array.from({ length: Math.ceil(scaledWidth / squareSize) }, (_, i) => (
+        <Line
+            key={`vertical-${i}`}
+            points={[i * squareSize, 0, i * squareSize, scaledHeight]}
+            stroke="rgba(0, 0, 0, 0.8)"
+            strokeWidth={strokeWidth}
+        />
+    ));
+
+    // Генерация горизонтальных линий
+    const horizontalLines = Array.from({ length: Math.ceil(scaledHeight / squareSize) }, (_, i) => (
+        <Line
+            key={`horizontal-${i}`}
+            points={[0, i * squareSize, scaledWidth, i * squareSize]}
+            stroke="rgba(0, 0, 0, 0.8)"
+            strokeWidth={strokeWidth}
+        />
+    ));
 
     return (
         <div className="Grid">
@@ -19,27 +39,13 @@ const GridLines = ({ windowWidth, windowHeight, scale }) => {
                 scaleX={scale} 
                 scaleY={scale} 
             >
-                {Array.from({ length: numberOfLines }, (_, i) => (
-                    <Line
-                        key={`vertical-${i}`}
-                        points={[i * (scaledWidth / numberOfLines), 0, i * (scaledWidth / numberOfLines), scaledHeight ]}
-                        stroke="rgba(128, 128, 128, 0.5)"
-                        strokeWidth={strokeWidth}
-                    />
-                ))}
-                {Array.from({ length: numberOfLines }, (_, i) => (
-                    <Line
-                        key={`horizontal-${i}`}
-                        points={[0, i * (scaledHeight / numberOfLines), scaledWidth, i * (scaledHeight / numberOfLines)]}
-                        stroke="rgba(128, 128, 128, 0.5)"
-                        strokeWidth={strokeWidth}
-                    />
-                ))}
+                {verticalLines}
+                {horizontalLines}
             </Group>
-        
         </div>
     );
 }
 
 export default GridLines;
+
 
