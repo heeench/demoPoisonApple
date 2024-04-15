@@ -9,10 +9,10 @@
   right: 0;
   height: 100vh;
   width: 23%;
-  background-color: #07021a;
+  background-color: #050000e0;
   display: flex;
   flex-direction: column;
-  border: 2px solid rgb(66, 51, 100);
+  border: 2px solid rgb(22, 1, 1);
   border-radius: 4px;
   box-shadow: 0 0 10px rgba(80, 49, 9, 0.2);
 }
@@ -26,7 +26,7 @@
   font-size: 17px;
   font-family: 'Vinque';
   color: azure;
-  border: 2px solid #dcaefd8a;
+  border: 2px solid #4126268a;
   margin-top: 2vh;
   margin-left: 0.65vw;
   box-shadow: 0 0 10px rgba(80, 49, 9, 0.2);
@@ -35,7 +35,7 @@
 
 .chat-message {
   padding: 8px;
-  border-bottom: 1px solid #ecd9f567;
+  border-bottom: 1px solid #633b3b67;
 }
 
 .chat-messages::-webkit-scrollbar {
@@ -76,7 +76,7 @@
 
 .button {
   padding: 10px;
-  background-color: #300c46;
+  background-color: #490202d2;
   color: white;
   border: none;
   border-radius: 50%; 
@@ -92,7 +92,7 @@
 }
 
 .button:hover {
-  background-color: #3e0144;
+  background-color: #680202;
 }
 
 .icon-btn {
@@ -107,14 +107,14 @@
 .toggle-button {
   position: absolute;
   top: 50%;
-  left: -20px; 
+  left: -14px; 
   transform: translateY(-50%);
-  background-color: #300c4694;
+  background-color: #490202c5;
   border: none;
   color: white;
   cursor: pointer;
-  width: 38px; 
-  height: 38px; 
+  width: 30px; 
+  height: 30px; 
   border-radius: 50%; 
   display: flex;
   justify-content: center;
@@ -124,14 +124,14 @@
 .toggle-button:hover {
   position: absolute;
   top: 50%;
-  left: -20px; 
+  left: -14px; 
   transform: translateY(-50%);
-  background-color: #3e0144; 
+  background-color: #580202; 
   border: none;
   color: white;
   cursor: pointer;
-  width: 38px; 
-  height: 38px;  
+  width: 30px; 
+  height: 30px;  
   border-radius: 50%; 
   display: flex;
   justify-content: center;

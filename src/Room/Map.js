@@ -79,28 +79,27 @@ const Map = ({ roomId, accessToken }) => {
     };
 
         
-        const checkDeselect = (e) => {
-            const clickedOnTransformer = e.target.getParent()?.className === 'Transformer';
+    const checkDeselect = (e) => {
+        const clickedOnTransformer = e.target.getParent()?.className === 'Transformer';
         
-            if (!clickedOnTransformer && selectedId < images.length && trRefs.current) {
-                const node = trRefs.current[selectedId];
+        if (!clickedOnTransformer && selectedId < images.length && trRefs.current) {
+            const node = trRefs.current[selectedId];
                 
-                if (node) {
-                    updateImage(selectedId, node);
-                }
+            if (node) {
+                updateImage(selectedId, node);
             }
-        };
+        }
+    };
         
-        const handleTransformEnd = () => {
-            if (
-                selectedId !== null &&
-                selectedId < images.length &&
-                trRefs.current &&
-                trRefs.current[selectedId] && 
-                !lockedImages[selectedId]
-                
+    const handleTransformEnd = () => {
+        if (
+            selectedId !== null &&
+            selectedId < images.length &&
+            trRefs.current &&
+            trRefs.current[selectedId] && 
+            !lockedImages[selectedId]     
             ) {
-                const node = trRefs.current[selectedId];
+            const node = trRefs.current[selectedId];
             
                 if (node && typeof node === 'object' && typeof node.getAbsoluteTransform === 'function' && !lockedImages[selectedId]) {
                     const absoluteTransform = node.getAbsoluteTransform();
@@ -112,26 +111,27 @@ const Map = ({ roomId, accessToken }) => {
             }
         };
 
-        useEffect(() => {
-    const newRefs = {};
-    images.forEach((_, index) => {
-        if (trRefs.current[index]) {
-            newRefs[index] = trRefs.current[index];
-        }
-    });
-    trRefs.current = newRefs;
-}, [images]);
+    useEffect(() => {
+        const newRefs = {};
+            images.forEach((_, index) => {
+                if (trRefs.current[index]) {
+                    newRefs[index] = trRefs.current[index];
+                }
+            });
+            trRefs.current = newRefs;
+        }, [images]);
         
-        const showToolbar = (clientX, clientY) => {
-            setToolbarPosition({ x: clientX, y: clientY });
-            setToolbarVisible(true);  
-        };
+    const showToolbar = (clientX, clientY) => {
+        setToolbarPosition({ x: clientX, y: clientY });
+        setToolbarVisible(true);  
+    };
 
-        const hideToolbar = () => {
-            setToolbarVisible(false);
-        };
+    const hideToolbar = () => {
+        setToolbarVisible(false);
+    };
 
-        const [scale, setScale] = useState(1);
+    const [scale, setScale] = useState(1);
+
 
         return (
             <div className='Map' onContextMenu={(e) => {
@@ -139,7 +139,8 @@ const Map = ({ roomId, accessToken }) => {
                 e.stopPropagation();
                 return false;
             }}>
-                <div className="file-upload-container">
+
+                <div className="file-upload-container" >
                     <label htmlFor="file-upload" className="file-upload-label">
                         <box-icon className='imageAdd' name='image-add' color='rgba(255,255,255,.8)'></box-icon> 
                     </label>

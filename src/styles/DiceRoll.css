@@ -6,7 +6,8 @@
   position: absolute;
   top: 50px;
   left: 50px;
-  width: 20%;
+  width: 200px;
+  height: 145px;
   margin: 0 10px 10px; 
   justify-content: center;
   align-items: center;
@@ -18,25 +19,34 @@
   top:-40px;
   padding: 5px;
   font-family: 'Vinque';
+  color: #ffffff;
+}
+
+label {
+  padding-left:5px;
 }
 
 #diceCount {
-  width: 30%;
+  width: 15%;
   border: #0f011f;
   border-radius: 15px;
-  padding-left: 8px;
+  padding-left: 5px;
   font-family: 'Vinque';
-  
+  margin-left: 10px;
 }
 
 #diceType {
   border: #0f011f;
   border-radius: 15px;
   font-family: 'Vinque';
+  margin-left: 5px;
+  padding-left: 1px;
+  width: 20%;
+  
 }
 
 .roll {
-  background-color: #2b8df7;
+  background-color: #0e0000;
   color: white;
   border: none;
   cursor: pointer;
@@ -52,7 +62,7 @@
 }
 
 .roll:hover {
-  background-color: #58a5f8;
+  background-color: #1b0101;
 }
 
 .d20 {
@@ -61,7 +71,7 @@
 }
 
 .btn-menu:hover {
-  background-color: #3f0581;
+  background-color: #500303;
 }
 
 .dd {
@@ -70,12 +80,12 @@
 
 .btn-menu {
   padding: 9px;
-  background-color: #160136;
+  background-color: #290101fd;
   color: white;
   border: none;
   border-radius: 50%; 
   cursor: pointer;
   position: relative;
   top: -48px;
-  border: 2px solid #0f011f;
+  border: 2px solid #00000041;
 }

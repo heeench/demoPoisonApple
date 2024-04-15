@@ -33,13 +33,14 @@ const DiceRoller = ({ sendMessageDice }) => {
   
   
     return (
-      <div className='dice' style={{ backgroundColor: menuOpen ? 'rgb(38, 71, 131, 0.3)' : 'transparent', border: menuOpen ? '1px solid rgb(21, 8, 30)' : '' }}> 
+      <div className='dice' style={{ backgroundColor: menuOpen ? '#502424a9' : 'transparent', border: menuOpen ? '0.5px solid rgb(21, 8, 30)' : '', 
+                                    borderRadius: menuOpen ? '20px' : '' }}> 
       <button className='btn-menu' onClick={toggleMenu}>
         <FontAwesomeIcon className='d20' icon={faDiceD20} />
       </button>
       {menuOpen && (
         <div className="menu">
-          <label htmlFor="diceType" id="diceType">Выберите тип кубика:</label>
+          <label htmlFor="diceType" id="diceType">Выберите тип кубика: </label>
           <select id="diceType" value={selectedDiceType} onChange={handleDiceTypeChange}>
             <option value="d4">d4</option>
             <option value="d6">d6</option>
@@ -50,7 +51,7 @@ const DiceRoller = ({ sendMessageDice }) => {
             <option value="d100">d100</option>
           </select>
           <div>
-            <label htmlFor="diceCount">Выберите количество кубиков:</label>
+            <label htmlFor="diceCount">Выберите количество кубиков: </label>
             <input type="number" id="diceCount" min="1" value={selectedDiceCount} onChange={(e) => setSelectedDiceCount(parseInt(e.target.value))} />
           </div>
         </div>

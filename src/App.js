@@ -16,6 +16,8 @@ function App() {
     </BrowserRouter>
   );
 }
+
+
 function AppContent() {
   const location = useLocation();
 
@@ -31,7 +33,7 @@ function AppContent() {
           </Routes>
       {/* Условный оператор для рендеринга Navbar */}
       {!location.pathname.includes('/room/') && <Navbar />}
-      <ToastContainer />
+      <ToastContainer theme='dark'/>
     </div>
   );
 }
