@@ -158,6 +158,7 @@ const RoomPage = () => {
     console.log('Полученные данные:', user);
   };
 
+
   return (
     <div className="hom"> 
       <div className="header" >

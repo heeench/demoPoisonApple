@@ -15,13 +15,13 @@ const ImageItem = ({
 }) => {
 
     const handleDragEnd = (e) => {
-        if (selectedId !== null && !locked) {
+        if (selectedId !== null && !locked && e.target) {
             const updatedImages = images.map((image, idx) => {
                 if (idx === selectedId) {
                     return {
                         ...image,
-                        x: e.target.x(),
-                        y: e.target.y(),
+                        x: e.target.attrs.x,
+                        y: e.target.attrs.y,
                     };
                 }
                 return image;
@@ -29,13 +29,14 @@ const ImageItem = ({
             setImages(updatedImages);
         }
     };
+    
 
     const handleTransformEnd = (e) => {
-        if (!locked) {
+        if (!locked && e.target) {
             const node = e.target;
-            const scaleX = node.scaleX();
-            const scaleY = node.scaleY();
-
+            const scaleX = node.attrs.scaleX;
+            const scaleY = node.attrs.scaleY;
+    
             setImages(images.map((image, idx) => {
                 if (idx === selectedId) {
                     return {
@@ -60,8 +61,8 @@ const ImageItem = ({
 
     return (
         <Image 
-            ref={trRefs}
-            image={imgData}  // Use imgData directly here
+            ref={(node) => (trRefs(node))}
+            image={imgData}  
             x={imgData.x}
             y={imgData.y}
             draggable={!locked}

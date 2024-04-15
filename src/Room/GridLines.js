@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Group, Line } from 'react-konva';
 
+
 const GridLines = ({ windowWidth, windowHeight, scale }) => {
     const [strokeWidth, setStrokeWidth] = useState(0.2);
     const scaledWidth = windowWidth * scale;
@@ -10,10 +11,8 @@ const GridLines = ({ windowWidth, windowHeight, scale }) => {
         setStrokeWidth(newValue);
     };
 
-    // Размер квадрата в пикселях
-    const squareSize = 5 * scale;  // 5 футов
+    const squareSize = 5 * scale;  
 
-    // Генерация вертикальных линий
     const verticalLines = Array.from({ length: Math.ceil(scaledWidth / squareSize) }, (_, i) => (
         <Line
             key={`vertical-${i}`}
@@ -23,7 +22,6 @@ const GridLines = ({ windowWidth, windowHeight, scale }) => {
         />
     ));
 
-    // Генерация горизонтальных линий
     const horizontalLines = Array.from({ length: Math.ceil(scaledHeight / squareSize) }, (_, i) => (
         <Line
             key={`horizontal-${i}`}
@@ -38,7 +36,7 @@ const GridLines = ({ windowWidth, windowHeight, scale }) => {
             <Group 
                 scaleX={scale} 
                 scaleY={scale} 
-            >
+            > 
                 {verticalLines}
                 {horizontalLines}
             </Group>
@@ -47,5 +45,3 @@ const GridLines = ({ windowWidth, windowHeight, scale }) => {
 }
 
 export default GridLines;
-
-
