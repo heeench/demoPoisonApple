@@ -34,7 +34,7 @@ const DiceRoller = ({ sendMessageDice }) => {
   
     return (
       <div className='dice' style={{ backgroundColor: menuOpen ? '#502424a9' : 'transparent', border: menuOpen ? '0.5px solid rgb(21, 8, 30)' : '', 
-                                    borderRadius: menuOpen ? '20px' : '' }}> 
+                                    borderRadius: menuOpen ? '20px' : '', backdropFilter: menuOpen? 'blur(1px)' : '' }}> 
       <button className='btn-menu' onClick={toggleMenu}>
         <FontAwesomeIcon className='d20' icon={faDiceD20} />
       </button>

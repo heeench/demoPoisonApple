@@ -4,7 +4,7 @@
   }
 
 .toolbar {
-    background-color: #a0373775;
+    background-color: #d14d4d75;
     backdrop-filter: blur(1px);
     width: 110px;
     height: 95px;
@@ -24,7 +24,7 @@
     top: -8px;
     width: 108%;
     right: 10px;
-    background-color: #d69c9c2d;
+    background-color: #c9c4c404;
     color: rgb(7, 0, 0);
     border: none;
     padding: 5px;
@@ -47,6 +47,137 @@
 
 .Map .grid {
   overflow:hidden;
+}
+
+.plus {
+  position: absolute;
+  left: 145px;
+  top: 2px;
+  color:#4b0202;
+}
+
+.minus {
+  position: absolute;
+  right: 140px;
+  top: 2px;
+  color: #4b0202;
+}
+
+.gridRange {
+  position: absolute;
+  top: 15px;
+  left: 190px;
+  
+}
+
+  input[type='range'] {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 10px;
+    background: #7e64642d;
+    border: 1px solid #420b0b;
+    border-radius: 20px;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+  }
+  
+  
+  input[type='range']::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 20px;
+    background: #1f0101;
+    cursor: pointer;
+  }
+  
+
+  input[type='range']::-webkit-slider-thumb:hover {
+    background: #4b0202;
+  }
+
+  .gridInputWrapper {
+    position: relative;
+}
+
+.switch {
+  position: absolute;
+  display: inline-block;
+  width: 35px;
+  height: 21px;
+  top: 14px;
+  left: 370px;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.switch-on {
+  position: absolute;
+  display: inline-block;
+  width: 35px;
+  height: 21px;
+  top: 14px;
+  left: 170px;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.switch input {display:none;}
+.switch-on input {display:none;}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  bottom: 0px;
+  left: 0px;
+  top: 0px;
+  right: 0px;
+  background-color: #5756564d;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 15px;
+  width: 15px;
+  left: 4px;
+  bottom: 3px;
+  background-color: rgb(250, 250, 250);
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #290303;
+}
+
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(23px);
+  -ms-transform: translateX(23px);
+  transform: translateX(16px);
+}
+
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+.gridInputValue {
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 14px;
+    color: #3b0505;
 }
 
 .file-upload-container {

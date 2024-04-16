@@ -1,16 +1,12 @@
 import React, { useState } from 'react';
 import { Group, Line } from 'react-konva';
+import '../styles/Grid.css'
 
 
 const GridLines = ({ windowWidth, windowHeight, scale }) => {
-    const [strokeWidth, setStrokeWidth] = useState(0.2);
+    const [strokeWidth, setStrokeWidth] = useState(0.25);
     const scaledWidth = windowWidth * scale;
     const scaledHeight = windowHeight * scale;
-
-    const handleChange = (event, newValue) => {
-        setStrokeWidth(newValue);
-    };
-
     const squareSize = 5 * scale;  
 
     const verticalLines = Array.from({ length: Math.ceil(scaledWidth / squareSize) }, (_, i) => (

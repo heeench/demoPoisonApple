@@ -7,6 +7,8 @@ import GridLines from './GridLines';
 import ImageItem from './ImageItem';
 import SockJS from 'sockjs-client';
 import Stomp from 'stompjs';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBorderAll, faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 const Map = ({ roomId, accessToken }) => {
     const [selectedId, selectShape] = useState(null);
@@ -18,14 +20,18 @@ const Map = ({ roomId, accessToken }) => {
     const [rotation, setRotation] = useState();
     const [stompClient, setStompClient] = useState(null);
     const [loadingImage, setLoadingImage] = useState(false);
+    const [gridVisible, setGridVisible] = useState(true);
 
     const handleImageUpload = async (e) => {
         const file = e.currentTarget.files[0];
         setLoadingImage(true);
-        toast.loading("Подождите... Изображение загружается!");
+        
         if (!file) {
             console.error("File is null or not selected");
-            return;
+            setLoadingImage(false);
+            return;   
+        } else {
+            toast.loading("Подождите... Изображение загружается!");
         }
     
         const formData = new FormData();
@@ -193,7 +199,14 @@ const Map = ({ roomId, accessToken }) => {
             setToolbarVisible(false);
         };
         
-        const [scale, setScale] = useState(1);
+        const [scale, setScale] = useState(2);
+
+        const showGrid = () => {
+            setGridVisible(true);
+        }
+        const hideGrid = () => {
+            setGridVisible(false);
+        }
         
         
             return (
@@ -215,6 +228,27 @@ const Map = ({ roomId, accessToken }) => {
                             className="file-upload-input" 
                         />
                     </div>
+                    {gridVisible && (
+                    <div className='gridRange'>
+                        <FontAwesomeIcon className='plus' icon={faPlus} color='rgba(255,255,255,.8)'></FontAwesomeIcon>
+                        <FontAwesomeIcon className='minus' icon={faMinus} color='rgba(255,255,255,.8)'></FontAwesomeIcon>
+                    <input 
+                        className='gridInput'
+                        type='range'
+                        max={4}
+                        min={1.7}
+                        step={0.0001}
+                        value={scale} 
+                        onChange={(e) => setScale(parseFloat(e.target.value))}
+                        onClick={(e) => setScale(scale + 0.0001)}
+                    />
+                    <span className='gridInputValue'>{Math.round((scale - 1.68) / (4.01 - 1.7) * 100)}%</span>
+                    </div>
+                    )}
+                    <label className={gridVisible ? "switch" : "switch-on"}>
+                        <input type="checkbox" checked={gridVisible} onChange={gridVisible ? hideGrid : showGrid} />
+                        <span className="slider round"></span>
+                    </label>
                     {toolbarVisible && (
                         <ToolBar 
                             images={images}
@@ -228,7 +262,7 @@ const Map = ({ roomId, accessToken }) => {
                             setLockedImages={setLockedImages}
                         />
                     )}
-        
+            
                     <Stage
                         width={window.innerWidth}
                         height={window.innerHeight}
@@ -238,9 +272,9 @@ const Map = ({ roomId, accessToken }) => {
                         onWheel={(e) => {
                             if (e.evt.ctrlKey) {
                                 e.evt.preventDefault();
-                                let newScale = scale + e.evt.deltaY * -0.001;
+                                let newScale = scale + e.evt.deltaY * -0.0002;
         
-                                const minScale = 2;
+                                const minScale = 1.7;
                                 const maxScale = 4;
         
                                 newScale = Math.min(maxScale, Math.max(minScale, newScale));
@@ -278,15 +312,16 @@ const Map = ({ roomId, accessToken }) => {
                                     scaleEnabled={true}
                                     onTransformEnd={handleTransformEnd}
                                 />
-                            )}
+                            )} 
+                            {gridVisible && (             
                             <GridLines 
                                 windowWidth={window.innerWidth + 30}
                                 windowHeight={window.innerHeight - 10}
                                 scale={scale}
                             />
-                             
+                        )}
                         </Layer>
-                    </Stage>
+                    </Stage>      
                 </div>
             );
         }
