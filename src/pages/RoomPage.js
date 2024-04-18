@@ -7,7 +7,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import SockJS from 'sockjs-client';
 import Stomp from 'stompjs';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUserCircle, faSkull } from "@fortawesome/free-solid-svg-icons";
+import { faSkull, faUsers } from "@fortawesome/free-solid-svg-icons";
 import { toast } from 'react-toastify';
 
 
@@ -62,9 +62,13 @@ const RoomPage = () => {
     if (stompClient) {
       const subscription = stompClient.subscribe(`/topic/users/${roomId}`, (userData) => {
         try {
-          const nicknames = JSON.parse(userData.body); // Распарсить JSON
-          setUser(prevUser => [...new Set([...prevUser, ...nicknames])]); // Использовать Set для исключения дубликатов
-          console.log('Добавлены никнеймы:', nicknames);
+          const nicknames = JSON.parse(userData.body); 
+          if (nicknames != null) { 
+            setUser(prevUser => [...new Set([...prevUser, ...nicknames])]); 
+            console.log('Добавлены никнеймы:', nicknames);
+          } else {
+            console.error('Ошибка: Неверный формат данных');
+          }
         } catch (error) {
           console.error('Ошибка парсинга JSON:', error);
         }
@@ -75,6 +79,7 @@ const RoomPage = () => {
       };
     }
   }, [stompClient, roomId]);
+  
 
 
   useEffect(() => {
@@ -83,6 +88,12 @@ const RoomPage = () => {
       const tokenObject = JSON.parse(tokenString);
       const cleanToken = tokenObject.access_token;
       setAccessToken(cleanToken);
+    } else if (tokenString == null) {
+      toast.error("Вы не авторизованы, либо ваша сессия закончилась!")
+      setTimeout(() => {
+        navigate("/signin")
+      }, 1000)
+      
     }
   }, []);
 
@@ -155,14 +166,15 @@ const RoomPage = () => {
   
   const toggleUsersList = () => {
     setMenuOpen(!menuOpen);
-    console.log('Полученные данные:', user);
   };
 
 
   return (
     <div className="hom"> 
       <div className="header" >
-      <img className='favicon-room' src="../favicon.png" alt="" onClick={homepage}/> 
+        <div className="fav-ico" titl="Покинуть комнату">
+          <img className='favicon-room' src="../favicon.png" alt="" onClick={homepage} /> 
+        </div>
       </div>
       <div className="room-page">
         <div className="game-area">
@@ -171,12 +183,12 @@ const RoomPage = () => {
           </div>
         </div>
         <div className="users-list">
-          <button className='btn-users-list' onClick={toggleUsersList}>
-            <FontAwesomeIcon className='btn-user-list' icon={faUserCircle} />
+          <button className='btn-users-list' onClick={toggleUsersList} titl="Пользователи в комнате">
+            <FontAwesomeIcon className='btn-user-list' icon={faUsers} />
           </button>
-          {menuOpen && (
+          {menuOpen && user && user.length > 0 && (
             <div className="menu-usr">
-              {user.map((nickname, index) => ( 
+              {Array.isArray(user) && user.map((nickname, index) => ( 
                 <div key={index} className="usr">
                   <FontAwesomeIcon icon={faSkull} className="usr-icon" />
                   <strong>{nickname}</strong> 

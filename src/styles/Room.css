@@ -27,6 +27,32 @@
   width: 60px;
   height: 60px;
 }
+.fav-ico {
+  width: 60px;
+  height: 74px;
+}
+
+.fav-ico::after {
+  content: attr(titl);
+  font-family: 'Vinque';
+  display: none;
+  position: absolute;
+  background-color: #2e2e2ecc; 
+  color: #fff; 
+  padding: 5px; 
+  border-radius: 5px; 
+  font-size: 14px; 
+  white-space: nowrap; 
+  z-index: 1;
+  left: 0;
+  top: 0;
+}
+
+.fav-ico:hover::after {
+  display: block;
+  left: calc(3% + 1px); 
+  top: calc(5% + 1px);
+}
 
 .dice-area {
   position: absolute;
@@ -66,7 +92,29 @@
 
 .btn-user-list {
   position: relative;
-  right: 2%;
+  right: 14%;
+}
+
+.btn-users-list::after {
+  content: attr(titl);
+  font-family: 'Vinque';
+  display: none;
+  position: absolute;
+  background-color: #2e2e2ecc; 
+  color: #fff; 
+  padding: 5px; 
+  border-radius: 5px; 
+  font-size: 14px; 
+  white-space: nowrap; 
+  z-index: 1;
+  left: 0;
+  top: 0;
+}
+
+.btn-users-list:hover::after {
+  display: block;
+  left: calc(30% + 1px); 
+  top: calc(60% + 1px);
 }
 
 .menu-usr {

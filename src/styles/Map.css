@@ -223,3 +223,91 @@ input:checked + .slider:before {
     cursor: pointer;
     color: white;
   }
+
+  .file-upload-label::after {
+    content: attr(titl);
+    display: none;
+    position: absolute;
+    background-color: #333333da; 
+    color: #fff; 
+    padding: 5px; 
+    border-radius: 5px; 
+    font-size: 14px; 
+    white-space: nowrap; 
+    z-index: 1;
+    left: 0;
+    top: 0;
+}
+
+.file-upload-label:hover::after {
+    display: block;
+    left: calc(50% + 1px); 
+    top: calc(60% + 1px);
+}
+
+
+.gridInput::after {
+  content: attr(titl);
+  font-family: 'Vinque';
+  display: none;
+  position: absolute;
+  background-color: #242323fa; 
+  color: #fff; 
+  padding: 5px; 
+  border-radius: 5px; 
+  font-size: 14px; 
+  white-space: nowrap; 
+  z-index: 1;
+  left: 0;
+  top: 0;
+}
+
+.gridInput:hover::after {
+  display: block;
+  left: calc(20% + 1px); 
+  top: calc(60% + 1px);
+}
+
+.switch::after {
+  content: attr(titl);
+  font-family: 'Vinque';
+  display: none;
+  position: absolute;
+  background-color: #2e2e2ecc; 
+  color: #fff; 
+  padding: 5px; 
+  border-radius: 5px; 
+  font-size: 14px; 
+  white-space: nowrap; 
+  z-index: 1;
+  left: 0;
+  top: 0;
+}
+
+.switch:hover::after {
+  display: block;
+  left: calc(30% + 1px); 
+  top: calc(60% + 1px);
+}
+
+.switch-on::after {
+  content: attr(titl);
+  font-family: 'Vinque';
+  display: none;
+  position: absolute;
+  background-color: #2e2e2ecc; 
+  color: #fff; 
+  padding: 5px; 
+  border-radius: 5px; 
+  font-size: 14px; 
+  white-space: nowrap; 
+  z-index: 1;
+  left: 0;
+  top: 0;
+}
+
+.switch-on:hover::after {
+  display: block;
+  left: calc(30% + 1px); 
+  top: calc(60% + 1px);
+}

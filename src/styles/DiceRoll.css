@@ -89,3 +89,26 @@ label {
   top: -48px;
   border: 2px solid #00000041;
 }
+
+
+.btn-menu::after {
+  content: attr(titl);
+  font-family: 'Vinque';
+  display: none;
+  position: absolute;
+  background-color: #2e2e2ecc; 
+  color: #fff; 
+  padding: 5px; 
+  border-radius: 5px; 
+  font-size: 14px; 
+  white-space: nowrap; 
+  z-index: 1;
+  left: 0;
+  top: 0;
+}
+
+.btn-menu:hover::after {
+  display: block;
+  left: calc(30% + 1px); 
+  top: calc(60% + 1px);
+}

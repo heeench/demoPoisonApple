@@ -31,7 +31,6 @@ function AppContent() {
           <Route path={`/room/:roomId`} element={<RoomPage />} />
           <Route path="*" element={<Navigate to="/" />} />
           </Routes>
-      {/* Условный оператор для рендеринга Navbar */}
       {!location.pathname.includes('/room/') && <Navbar />}
       <ToastContainer theme='dark'/>
     </div>

@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { Stage, Layer, Transformer, Group } from 'react-konva';
+import { Stage, Layer, Transformer } from 'react-konva';
 import { toast } from 'react-toastify';
 import '../styles/Map.css';
 import ToolBar from './ToolBar';
@@ -8,7 +8,7 @@ import ImageItem from './ImageItem';
 import SockJS from 'sockjs-client';
 import Stomp from 'stompjs';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBorderAll, faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 const Map = ({ roomId, accessToken }) => {
     const [selectedId, selectShape] = useState(null);
@@ -21,7 +21,69 @@ const Map = ({ roomId, accessToken }) => {
     const [stompClient, setStompClient] = useState(null);
     const [loadingImage, setLoadingImage] = useState(false);
     const [gridVisible, setGridVisible] = useState(true);
+    const [dataPos, setDataPos] = useState([]);
+    let isMounted = false;
 
+    const fetchData = async () => {
+        try {
+            const response = await fetch(`http://localhost:8080/api/images/fetchContent/${roomId}`, {
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`
+                }
+            });
+            if (response.ok) {
+                const data = await response.json();
+                console.log('Изображения получены:', data);
+
+                data.forEach(imageData => {
+                    const imageUrl = imageData.imagePath;
+                    const image = new Image();
+                    image.src = imageUrl;
+                    image.onload = () => {
+                        if (!images.some(img => img.img.src === imageUrl)) {
+                            console.log(image)
+                            const newImage = {
+                                img: image,
+                                name: imageData.name,
+                                imagePath: imageUrl,
+                                x: imageData.x,
+                                y: imageData.y,
+                                rotation: imageData.rotation,
+                                scaleX: imageData.scaleX,
+                                scaleY: imageData.scaleY,
+                                locked: imageData.locked
+                            };
+                            setImages(prevImages => [...prevImages, newImage]);
+                            setTimeout(() => {
+                                toast.success('Изображение успешно загружено');
+                            }, 300);
+                        } else {
+                            console.log(`Изображение ${imageUrl} уже загружено`);
+                        }
+                    };
+                    image.onerror = () => {
+                        console.error('Error loading image');
+                        toast.error('Ошибка при загрузке изображения');
+                    };
+                });
+            } else {
+                console.error('Ошибка получения изображений:', response.statusText);
+            }
+        } catch (error) {
+            console.error('Ошибка при запросе изображений:', error);
+        }
+    };
+    useEffect(() => {
+        if (!isMounted) {
+            fetchData();
+        }
+    
+        return () => {
+            isMounted = true;
+        };
+    }, [isMounted]);
+    
+    
     const handleImageUpload = async (e) => {
         const file = e.currentTarget.files[0];
         setLoadingImage(true);
@@ -34,11 +96,10 @@ const Map = ({ roomId, accessToken }) => {
             toast.loading("Подождите... Изображение загружается!");
         }
     
-        const formData = new FormData();
-        formData.append('file', file);
-    
         try {
-            
+            const formData = new FormData();
+            formData.append('file', file);
+    
             const response = await fetch(`http://localhost:8080/api/images/upload?roomId=${roomId}`, {
                 method: 'POST',
                 headers: {
@@ -48,6 +109,7 @@ const Map = ({ roomId, accessToken }) => {
             });
             
             if (response.ok) {
+                window.location.reload()                
             } else {
                 console.error('Error uploading image:', response.statusText);
                 toast.error('Ошибка при загрузке изображения');
@@ -58,10 +120,7 @@ const Map = ({ roomId, accessToken }) => {
             toast.error('Ошибка при загрузке изображения');
         } finally {
             setLoadingImage(false);
-            setTimeout(()=>{
-                toast.dismiss();
-            }, 500
-        )
+            toast.dismiss();
             
         }
     };
@@ -93,69 +152,70 @@ const Map = ({ roomId, accessToken }) => {
     useEffect(() => {
         if (stompClient) {
             const subscription = stompClient.subscribe(`/topic/image/upload/${roomId}`, async (message) => {
-                const imageUrl = message.body;
-                    const image = new Image();
-                    image.src = imageUrl;
-                    image.onload = () => {
-                        const newImage = {
-                            img: image,
-                            x: 0,
-                            y: 0,
-                            rotation: 0,
-                            scaleX: 1,
-                            scaleY: 1,
-                            locked: false
+                const imageData = JSON.parse(message.body);
+                const updatedImages = images.map(img => {
+                    if (img.imagePath === imageData.imagePath) {
+                        return {
+                            ...img,
+                            roomId: roomId,
+                            name: imageData.name,
+                            imagePath: imageData.imagePath,
+                            x: imageData.x,
+                            y: imageData.y,
+                            rotation: imageData.rotation,
+                            scaleX: imageData.scaleX,
+                            scaleY: imageData.scaleY,
+                            locked: imageData.locked
                         };
-                        setImages(prevImages => [...prevImages, newImage]);
-                        setTimeout(()=>{
-                            toast.success('Изображение успешно загружено');
-                        }, 300
-                    )
-                    };
-    
-                    image.onerror = () => {
-                        console.error('Error loading image');
-                        toast.error('Ошибка при загрузке изображения');
-                    };
+                    }
+                    return img;
+                });
+                setImages(updatedImages);
+
             });
     
             return () => {
                 subscription.unsubscribe();
             };
         }
-    }, [stompClient, roomId, accessToken]);
+    }, [ roomId, images]);  
+ 
+    const updateImage = (index, newDataPos) => {
+        const selectedImage = images[index];
+        if (selectedImage && stompClient) { 
+            const { name, imagePath } = selectedImage;
     
+            const data = {
+                roomId: roomId,
+                name: name,
+                imagePath: imagePath,
+                x: newDataPos.x,
+                y: newDataPos.y,
+                rotation: newDataPos.rotation,
+                scaleX: newDataPos.scaleX,
+                scaleY: newDataPos.scaleY,
+                locked: newDataPos.locked
+            };
     
+            stompClient.send('/app/image', {}, JSON.stringify(data));
     
-    
-    const updateImage = () => {
-        if (selectedId !== null && trRefs.current && trRefs.current[selectedId]) {
-            const node = trRefs.current[selectedId];
-            setImages(prevImages => 
-                prevImages.map((image, idx) => 
-                    idx === selectedId ? {
-                        ...image,
-                        x: node.attrs.x,
-                        y: node.attrs.y,
-                        rotation: node.rotation(),
-                        scaleX: node.scaleX(),
-                        scaleY: node.scaleY(),
-                        locked: lockedImages[selectedId] || false 
-                    } : image
-                )
-            );
+            const updatedImages = [...images];
+            updatedImages[index] = { ...selectedImage, ...newDataPos };
+            setImages(updatedImages);
+        } else {
+            console.error('Изображение не найдено или WebSocket-соединение не установлено');
         }
     };
-
-        
+    
     const checkDeselect = (e) => {
         const clickedOnTransformer = e.target.getParent()?.className === 'Transformer';
         
-        if (!clickedOnTransformer && selectedId < images.length && trRefs.current) {
+        if (!clickedOnTransformer && selectedId !== null && selectedId < images.length && trRefs.current) {
             const node = trRefs.current[selectedId];
                 
             if (node) {
-                updateImage(selectedId, node);
+                const { x, y, rotation, scaleX, scaleY } = node.attrs;
+                updateImage(selectedId, { x, y, rotation, scaleX, scaleY });
             }
         }
     };
@@ -167,28 +227,26 @@ const Map = ({ roomId, accessToken }) => {
             trRefs.current &&
             trRefs.current[selectedId] && 
             !lockedImages[selectedId]     
-            ) {
+        ) {
             const node = trRefs.current[selectedId];
             
-                if (node && typeof node === 'object' && typeof node.getAbsoluteTransform === 'function' && !lockedImages[selectedId]) {
-                    const absoluteTransform = node.getAbsoluteTransform();
-                    
-                    if (absoluteTransform && !lockedImages[selectedId]) {
-                        updateImage(selectedId, node);
-                    }
-                }
+            if (node && typeof node === 'object' && typeof node.getAbsoluteTransform === 'function' && !lockedImages[selectedId]) {
+                const { x, y, rotation, scaleX, scaleY } = node.attrs;
+                updateImage(selectedId, { x, y, rotation, scaleX, scaleY });
             }
-        };
+        }
+    };
+    
 
-        useEffect(() => {
-            const newRefs = {};
-                images.forEach((_, index) => {
-                    if (trRefs.current[index]) {
-                        newRefs[index] = trRefs.current[index];
-                    }
-                });
-                trRefs.current = newRefs;
-            }, [images]);
+    useEffect(() => {
+        const newRefs = {};
+        images.forEach((_, index) => {
+            if (trRefs.current[index]) {
+                newRefs[index] = trRefs.current[index];
+            }
+        });
+        trRefs.current = newRefs;
+    }, [images]);
             
         const showToolbar = (clientX, clientY) => {
             setToolbarPosition({ x: clientX, y: clientY });
@@ -217,7 +275,7 @@ const Map = ({ roomId, accessToken }) => {
                 }}>
         
                     <div className="file-upload-container" >
-                        <label htmlFor="file-upload" className="file-upload-label">
+                        <label htmlFor="file-upload" className="file-upload-label" titl="Загрузить изображение">
                             <box-icon className='imageAdd' name='image-add' color='rgba(255,255,255,.8)'></box-icon> 
                         </label>
                         <input 
@@ -241,12 +299,13 @@ const Map = ({ roomId, accessToken }) => {
                         value={scale} 
                         onChange={(e) => setScale(parseFloat(e.target.value))}
                         onClick={(e) => setScale(scale + 0.0001)}
+                        titl="Масштаб сетки"
                     />
                     <span className='gridInputValue'>{Math.round((scale - 1.68) / (4.01 - 1.7) * 100)}%</span>
                     </div>
                     )}
-                    <label className={gridVisible ? "switch" : "switch-on"}>
-                        <input type="checkbox" checked={gridVisible} onChange={gridVisible ? hideGrid : showGrid} />
+                    <label className={gridVisible ? "switch" : "switch-on"} titl={gridVisible ? "Скрыть сетку" : "Показать сетку"}>
+                        <input type="checkbox" checked={gridVisible} onChange={gridVisible ? hideGrid : showGrid}  />
                         <span className="slider round"></span>
                     </label>
                     {toolbarVisible && (
@@ -260,6 +319,7 @@ const Map = ({ roomId, accessToken }) => {
                             toolbarPosition={toolbarPosition}
                             lockedImages={lockedImages}
                             setLockedImages={setLockedImages}
+                            accessToken={accessToken}
                         />
                     )}
             
@@ -283,26 +343,42 @@ const Map = ({ roomId, accessToken }) => {
                         }}
                     >
                         <Layer>
-                            {images.map((imgData, index) => (
-                                <ImageItem 
-                                    key={index}
-                                    imgData={imgData.img} 
-                                    index={index} 
-                                    trRefs={(node) => trRefs.current[index] = node}
-                                    selectId={selectedId}
-                                    selectShape={selectShape}
-                                    setRotation={setRotation}
-                                    images={images}
-                                    setImages={setImages}
-                                    locked={lockedImages[index]}
-                                    showToolbar={showToolbar}
-                                    draggable={!lockedImages[index]}
-                                    onClick={(e) => {
-                                        selectShape(index);
-                                        showToolbar(e.evt.clientX, e.evt.clientY);
-                                    }}
-                                />
-                            ))}
+                        {images.map((imgData, index) => (
+                            <ImageItem 
+                                key={index}
+                                imgData={imgData} 
+                                index={index} 
+                                trRefs={(node) => trRefs.current[index] = node}
+                                selectedId={selectedId}
+                                selectShape={selectShape}
+                                setRotation={setRotation}
+                                images={images}
+                                setImages={setImages}
+                                locked={lockedImages[index]}
+                                showToolbar={showToolbar}
+                                draggable={!lockedImages[index]}
+                                onClick={(e) => {
+                                    selectShape(index);
+                                    showToolbar(e.evt.clientX, e.evt.clientY);
+                                    checkDeselect(e)
+                                    updateImage(index, { x: e.target.x(), y: e.target.y() });
+                                }}
+                                onDragEnd={(e) => {
+                                    if (!lockedImages[index]) {
+                                        const node = e.target;
+                                        const { x, y } = node.attrs;
+                                        updateImage(index, { x, y });
+                                    }
+                                }}
+                                onTransformEnd={() => {
+                                    if (!lockedImages[index]) {
+                                        const node = trRefs.current[index];
+                                        const { x, y, rotation, scaleX, scaleY } = node.attrs;
+                                        updateImage(index, { x, y, rotation, scaleX, scaleY });
+                                    }
+                                }}
+                            />
+                        ))}
         
                             {selectedId !== null && trRefs.current && trRefs.current[selectedId] && (
                                 <Transformer
@@ -325,5 +401,4 @@ const Map = ({ roomId, accessToken }) => {
                 </div>
             );
         }
-    
-    export default Map;
+        export default Map;
