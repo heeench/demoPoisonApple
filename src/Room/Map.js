@@ -66,6 +66,7 @@ const Map = ({ roomId, accessToken }) => {
                         toast.error('Ошибка при загрузке изображения');
                     };
                 });
+                
             } else {
                 console.error('Ошибка получения изображений:', response.statusText);
             }
@@ -109,7 +110,7 @@ const Map = ({ roomId, accessToken }) => {
             });
             
             if (response.ok) {
-                window.location.reload()                
+               fetchData()
             } else {
                 console.error('Error uploading image:', response.statusText);
                 toast.error('Ошибка при загрузке изображения');
@@ -171,7 +172,6 @@ const Map = ({ roomId, accessToken }) => {
                     return img;
                 });
                 setImages(updatedImages);
-
             });
     
             return () => {
@@ -358,10 +358,12 @@ const Map = ({ roomId, accessToken }) => {
                                 showToolbar={showToolbar}
                                 draggable={!lockedImages[index]}
                                 onClick={(e) => {
+                                    if(!lockedImages[index]) {
                                     selectShape(index);
                                     showToolbar(e.evt.clientX, e.evt.clientY);
                                     checkDeselect(e)
                                     updateImage(index, { x: e.target.x(), y: e.target.y() });
+                                    }
                                 }}
                                 onDragEnd={(e) => {
                                     if (!lockedImages[index]) {

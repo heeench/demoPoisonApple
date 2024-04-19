@@ -89,8 +89,10 @@ const ImageItem = ({
             onClick={(e) => {
                 e.cancelBubble = true;
                 if (e.stopPropagation) e.stopPropagation();
+                if(!locked) {
                 selectShape(index);
                 setRotation(e.target.rotation());
+                }
             }}
             onContextMenu={handleContextMenu}
             onDragEnd={handleDragEnd}
