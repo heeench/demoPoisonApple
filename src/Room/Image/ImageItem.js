@@ -1,5 +1,5 @@
-import React from 'react';
-import { Image } from 'react-konva';
+import React, {useState, useEffect} from 'react';
+import { Image, Text } from 'react-konva';
 
 const ImageItem = ({
     imgData,
@@ -11,24 +11,54 @@ const ImageItem = ({
     images,
     setImages,
     locked,
-    showToolbar
+    showToolbar,
 }) => {
 
+    const { img, x, y, scaleX, scaleY, rotation } = imgData;
+
     const handleDragEnd = (e) => {
-        if (selectedId !== null && !locked && e.target) {
-            const updatedImages = images.map((image, idx) => {
-                if (idx === selectedId) {
-                    return {
-                        ...image,
-                        x: e.target.x(),
-                        y: e.target.y(),
-                    };
-                }
-                return image;
-            });
-            setImages(updatedImages);
+        const pos = e.target.position();
+        const imageWidth = img.width * scaleX;
+        const imageHeight = img.height * scaleY;
+        const stageWidth = window.innerWidth - 100;
+        const stageHeight = window.innerHeight + 425;
+    
+        const minX = -imageWidth / 30;
+        const minY = -imageHeight / 15;
+        const maxX = stageWidth - imageWidth / 15;
+        const maxY = stageHeight - imageHeight / 15;
+    
+        let newX = pos.x;
+        let newY = pos.y;
+    
+        // Проверяем, не выходит ли новая позиция за границы по оси X
+        if (newX < minX) {
+            newX = minX;
+        } else if (newX > maxX) {
+            newX = maxX;
         }
+    
+        // Проверяем, не выходит ли новая позиция за границы по оси Y
+        if (newY < minY) {
+            newY = minY;
+        } else if (newY > maxY) {
+            newY = maxY;
+        }
+    
+        e.target.setAttrs({
+            x: newX,
+            y: newY,
+        });
+    
+        const updatedImages = [...images];
+        updatedImages[index] = {
+            ...updatedImages[index],
+            x: newX,
+            y: newY,
+        };
+        setImages(updatedImages);
     };
+    
 
     const handleTransformEnd = () => {
         if (selectedId !== null && !locked && trRefs.current && trRefs.current[index]) {
@@ -76,12 +106,18 @@ const ImageItem = ({
         }
     };
 
+    const handleMouseDown = () => {
+        selectShape(index);
+    };
+
     return (
+        <>
         <Image
             ref={(node) => trRefs(node, index)}
             image={imgData.img}
             x={imgData.x}
             y={imgData.y}
+            tokenName={imgData.tokenName}
             draggable={!locked}
             rotation={imgData.rotation}
             scaleX={imgData.scaleX}
@@ -97,8 +133,21 @@ const ImageItem = ({
             onContextMenu={handleContextMenu}
             onDragEnd={handleDragEnd}
             onTransformEnd={handleTransformEnd}
+            onDragMove={handleDragMove}
+            onMouseDown={handleMouseDown}
         />
-    );
+        {imgData.tokenName && (
+            <Text
+                x={x}
+                y={y - 15}
+                text={imgData.tokenName}
+                fill='black'
+                fontSize={16}
+                fontFamily='Vinque'
+            />
+        )}
+    </>
+);
 }
 
 export default ImageItem;

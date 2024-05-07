@@ -1,16 +1,13 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { Stage, Layer, Transformer } from 'react-konva';
+import { Stage, Layer, Transformer, Text } from 'react-konva';
 import { toast } from 'react-toastify';
-import '../styles/Map.css';
+import '../../styles/ImageTool.css';
 import ToolBar from './ToolBar';
-import GridLines from './GridLines';
 import ImageItem from './ImageItem';
 import SockJS from 'sockjs-client';
 import Stomp from 'stompjs';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 
-const Map = ({ roomId, accessToken }) => {
+const ImageTool = ({ roomId, accessToken }) => {
     const [selectedId, selectShape] = useState(null);
     const trRefs = useRef({});
     const [images, setImages] = useState([]);
@@ -20,8 +17,6 @@ const Map = ({ roomId, accessToken }) => {
     const [rotation, setRotation] = useState();
     const [stompClient, setStompClient] = useState(null);
     const [loadingImage, setLoadingImage] = useState(false);
-    const [gridVisible, setGridVisible] = useState(true);
-    const [dataPos, setDataPos] = useState([]);
     let isMounted = false;
 
     const fetchData = async () => {
@@ -46,6 +41,7 @@ const Map = ({ roomId, accessToken }) => {
                                 img: image,
                                 name: imageData.name,
                                 imagePath: imageUrl,
+                                tokenName: imageData.tokenName,
                                 x: imageData.x,
                                 y: imageData.y,
                                 rotation: imageData.rotation,
@@ -160,6 +156,7 @@ const Map = ({ roomId, accessToken }) => {
                             ...img,
                             roomId: roomId,
                             name: imageData.name,
+                            tokenName: imageData.tokenName,
                             imagePath: imageData.imagePath,
                             x: imageData.x,
                             y: imageData.y,
@@ -183,11 +180,12 @@ const Map = ({ roomId, accessToken }) => {
     const updateImage = (index, newDataPos) => {
         const selectedImage = images[index];
         if (selectedImage && stompClient) { 
-            const { name, imagePath } = selectedImage;
+            const { name, imagePath, tokenName } = selectedImage;
     
             const data = {
                 roomId: roomId,
                 name: name,
+                tokenName: tokenName,
                 imagePath: imagePath,
                 x: newDataPos.x,
                 y: newDataPos.y,
@@ -206,20 +204,23 @@ const Map = ({ roomId, accessToken }) => {
             console.error('Изображение не найдено или WebSocket-соединение не установлено');
         }
     };
+ 
     
     const checkDeselect = (e) => {
-        const clickedOnTransformer = e.target.getParent()?.className === 'Transformer';
-        
-        if (!clickedOnTransformer && selectedId !== null && selectedId < images.length && trRefs.current) {
-            const node = trRefs.current[selectedId];
-                
-            if (node) {
-                const { x, y, rotation, scaleX, scaleY } = node.attrs;
-                updateImage(selectedId, { x, y, rotation, scaleX, scaleY });
+        if (e.target && typeof e.target.getParent === 'function') {
+            const clickedOnTransformer = e.target.getParent()?.className === 'Transformer';
+            
+            if (!clickedOnTransformer && selectedId !== null && selectedId < images.length && trRefs.current) {
+                const node = trRefs.current[selectedId];
+                    
+                if (node) {
+                    const { x, y, rotation, scaleX, scaleY } = node.attrs;
+                    updateImage(selectedId, { x, y, rotation, scaleX, scaleY });
+                }
             }
         }
     };
-        
+      
     const handleTransformEnd = () => {
         if (
             selectedId !== null &&
@@ -236,7 +237,6 @@ const Map = ({ roomId, accessToken }) => {
             }
         }
     };
-    
 
     useEffect(() => {
         const newRefs = {};
@@ -256,58 +256,29 @@ const Map = ({ roomId, accessToken }) => {
         const hideToolbar = () => {
             setToolbarVisible(false);
         };
-        
-        const [scale, setScale] = useState(2);
-
-        const showGrid = () => {
-            setGridVisible(true);
-        }
-        const hideGrid = () => {
-            setGridVisible(false);
-        }
-        
-        
             return (
-                <div className='Map' onContextMenu={(e) => {
+                <div className='Image' onContextMenu={(e) => {
                     e.preventDefault();
                     e.stopPropagation();
                     return false;
                 }}>
-        
-                    <div className="file-upload-container" >
-                        <label htmlFor="file-upload" className="file-upload-label" titl="Загрузить изображение">
-                            <box-icon className='imageAdd' name='image-add' color='rgba(255,255,255,.8)'></box-icon> 
-                        </label>
-                        <input 
-                            type="file" 
-                            id="file-upload" 
-                            onChange={handleImageUpload} 
-                            accept="image/*" 
-                            className="file-upload-input" 
-                        />
+                    <div className='button-bar'>
+                        <div className="file-upload-container" >
+                            <label htmlFor="file-upload" className="file-upload-label" titl="Загрузить изображение">
+                                <box-icon className='imageAdd' name='image-add' color='rgba(255,255,255,.8)'></box-icon> 
+                            </label>
+                            <input 
+                                type="file" 
+                                id="file-upload" 
+                                onChange={handleImageUpload} 
+                                accept="image/*" 
+                                className="file-upload-input" 
+                            />
+                        </div>
+                            
                     </div>
-                    {gridVisible && (
-                    <div className='gridRange'>
-                        <FontAwesomeIcon className='plus' icon={faPlus} color='rgba(255,255,255,.8)'></FontAwesomeIcon>
-                        <FontAwesomeIcon className='minus' icon={faMinus} color='rgba(255,255,255,.8)'></FontAwesomeIcon>
-                    <input 
-                        className='gridInput'
-                        type='range'
-                        max={4}
-                        min={1.7}
-                        step={0.0001}
-                        value={scale} 
-                        onChange={(e) => setScale(parseFloat(e.target.value))}
-                        onClick={(e) => setScale(scale + 0.0001)}
-                        titl="Масштаб сетки"
-                    />
-                    <span className='gridInputValue'>{Math.round((scale - 1.68) / (4.01 - 1.7) * 100)}%</span>
-                    </div>
-                    )}
-                    <label className={gridVisible ? "switch" : "switch-on"} titl={gridVisible ? "Скрыть сетку" : "Показать сетку"}>
-                        <input type="checkbox" checked={gridVisible} onChange={gridVisible ? hideGrid : showGrid}  />
-                        <span className="slider round"></span>
-                    </label>
+                    
+                    <div className='gameArea'>
                     {toolbarVisible && (
                         <ToolBar 
                             images={images}
@@ -324,26 +295,14 @@ const Map = ({ roomId, accessToken }) => {
                     )}
             
                     <Stage
-                        width={window.innerWidth}
-                        height={window.innerHeight}
-                        onMouseDown={checkDeselect}
+                        width={window.innerWidth - 20}
+                        height={window.innerHeight + 490}
+                        onDragMove={checkDeselect}
                         onTouchStart={checkDeselect}
                         onClick={() => selectShape(null)}
-                        onWheel={(e) => {
-                            if (e.evt.ctrlKey) {
-                                e.evt.preventDefault();
-                                let newScale = scale + e.evt.deltaY * -0.0002;
-        
-                                const minScale = 1.7;
-                                const maxScale = 4;
-        
-                                newScale = Math.min(maxScale, Math.max(minScale, newScale));
-                                setScale(newScale);
-                            }
-                        }}
                     >
                         <Layer>
-                        {images.map((imgData, index) => (
+                        {images.map((imgData, index) => ( 
                             <ImageItem 
                                 key={index}
                                 imgData={imgData} 
@@ -356,13 +315,15 @@ const Map = ({ roomId, accessToken }) => {
                                 setImages={setImages}
                                 locked={lockedImages[index]}
                                 showToolbar={showToolbar}
-                                draggable={!lockedImages[index]}
+                                draggable={!lockedImages[selectedId]}
                                 onClick={(e) => {
-                                    if(!lockedImages[index]) {
-                                    selectShape(index);
-                                    showToolbar(e.evt.clientX, e.evt.clientY);
-                                    checkDeselect(e)
-                                    updateImage(index, { x: e.target.x(), y: e.target.y() });
+                                    if (e.nativeEvent.button === 0) {
+                                        if (!lockedImages[selectedId]) {
+                                            selectShape(index);
+                                            showToolbar(e.evt.clientX, e.evt.clientY);
+                                            checkDeselect(e);
+                                            updateImage(index, { x: e.target.x(), y: e.target.y() });
+                                        }
                                     }
                                 }}
                                 onDragEnd={(e) => {
@@ -379,9 +340,12 @@ const Map = ({ roomId, accessToken }) => {
                                         updateImage(index, { x, y, rotation, scaleX, scaleY });
                                     }
                                 }}
-                            />
+
+                            >
+                                  
+                        </ImageItem>
                         ))}
-        
+                       
                             {selectedId !== null && trRefs.current && trRefs.current[selectedId] && (
                                 <Transformer
                                     nodes={[trRefs.current[selectedId]]}
@@ -391,16 +355,10 @@ const Map = ({ roomId, accessToken }) => {
                                     onTransformEnd={handleTransformEnd}
                                 />
                             )} 
-                            {gridVisible && (             
-                            <GridLines 
-                                windowWidth={window.innerWidth + 30}
-                                windowHeight={window.innerHeight - 10}
-                                scale={scale}
-                            />
-                        )}
                         </Layer>
-                    </Stage>      
+                    </Stage>    
+                    </div>   
                 </div>
             );
         }
-        export default Map;
+export default ImageTool;

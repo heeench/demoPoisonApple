@@ -3,14 +3,6 @@
   src: url('../assets/Vinque_Rg.woff') format('woff');
 }
 
-.room-page {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  background: rgb(255, 255, 255);
-  height: 100%;
-  width: 100%; 
-}
 
 .favicon-room {
   position: relative;
@@ -54,15 +46,15 @@
   top: calc(5% + 1px);
 }
 
-.dice-area {
-  position: absolute;
-  width: 100%;
+.header {
+  background-color: #160101;
+  border-bottom: 3px solid #460101;
 }
 
+.users-list {
+  position: relative;
+  top: 3px;
 
-.header {
-  background-color: #070000;
-  border-bottom: 2px solid #460101;
 }
 
 .btn-users-list:hover {
@@ -70,18 +62,20 @@
 }
 
 .btn-user-list {
-  font-size: 20px ;
+  font-size: 20px;
+  z-index: 5;
 }
 
 .btn-users-list {
+  z-index: 5;
   padding: 9px;
-  background-color: #290101fd;
+  background-color: #460101fd;
   color: white;
   border: none;
   border-radius: 50%; 
   cursor: pointer;
   position: absolute;
-  top: 0.15%;
+  top: -0.7px;
   width: 42px; 
   height: 43px;
   left: 110px;
@@ -93,6 +87,7 @@
 .btn-user-list {
   position: relative;
   right: 14%;
+
 }
 
 .btn-users-list::after {
@@ -118,7 +113,7 @@
 }
 
 .menu-usr {
-  position: absolute;
+  position: relative;
   top:45px;
   left:130px ;
   padding: 5px;
@@ -128,6 +123,7 @@
   font-family: 'Vinque';
   background-color: #502424a9;
   backdrop-filter: blur(1.5px);
+  z-index: 5;
 }
 
 .usr {
@@ -140,4 +136,63 @@
 
 .usr-icon {
   padding-right: 7px;
+}
+
+.room-page {
+  position: relative;
+  background: rgba(255, 250, 250, 0);
+  height: 100%;
+  width: 100%; 
+}
+
+.grid-area {
+  position: absolute;
+  width: 100%;
+  background-color: transparent;
+}
+.grid-area {
+  pointer-events: none;
+}
+
+.grid-area .gridRange {
+  pointer-events: auto;
+}
+.grid-area .switch {
+  pointer-events: auto;
+}
+.grid-area .switch-on {
+  pointer-events: auto;
+}
+
+.grid-area .MapTool {
+  pointer-events: painted;
+}
+.grid-area svg {
+  pointer-events: auto;
+}
+
+.grid-area button {
+  pointer-events: auto;
+}
+
+.grid-area button {
+  pointer-events: auto;
+}
+
+.image-area {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  
+}
+
+.dice-area {
+  position: absolute;
+  width: 100%;
+}
+
+.chat-area {
+  position: relative;
+  width: 100%;
 }

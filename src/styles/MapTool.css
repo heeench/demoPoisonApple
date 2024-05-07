@@ -1,0 +1,78 @@
+@font-face {
+    font-family: 'Vinque';
+    src: url('../assets/Vinque_Rg.woff') format('woff');
+}
+  
+.MapTool {
+  position: absolute;
+}
+
+  .DrawMenu {
+    position: absolute;
+    top: -42px;
+    left: 620px;
+    width: 160px;
+    height: 110px;
+    background-color: rgba(61, 11, 11, 0.623);
+    border-radius: 10px;
+    z-index: 8;
+    padding: 5px;
+    display: inline-table;
+    backdrop-filter: blur(2px);
+  }
+
+  .PlainMode {
+    position: relative;
+    color: white;
+    font-family: 'Vinque';
+    top: 4px;
+    width: 100%;
+    border-radius: 10px;
+    border: 1px solid rgb(65, 0, 0);
+    background-color: rgba(73, 14, 14, 0.37);
+  }
+
+  .DiffMode {
+    position: relative;
+    color: white;
+    font-family: 'Vinque';
+    top: 6px;
+    border-radius: 10px;
+    border: 1px solid rgb(65, 0, 0);
+    background-color: rgba(73, 14, 14, 0.514);
+  }
+
+  .EraseMode {
+    position: relative;
+    color: white;
+    font-family: 'Vinque';
+    top: -14px;
+    width: 100%;
+    border-radius: 10px;
+    border: 1px solid rgb(65, 0, 0);
+    background-color: rgba(73, 14, 14, 0.514);
+  }
+
+  .WallMode {
+    position: relative;
+    color: white;
+    font-family: 'Vinque';
+    top: 30px;
+    width: 100%;
+    border-radius: 10px;
+    border: 1px solid rgb(65, 0, 0);
+    background-color: rgba(73, 14, 14, 0.514);
+  }
+
+  .DrawMode {
+    position: absolute;
+    color: white;
+    font-family: 'Vinque';
+    font-size: 14px;
+    top: -45px;
+    left: 480px;
+    z-index: 8;
+    border-radius: 10px;
+    border: 1px solid rgb(65, 0, 0);
+    background-color: rgba(73, 14, 14, 0.514);
+  }

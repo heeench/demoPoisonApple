@@ -3,14 +3,6 @@
     src: url('../assets/Vinque_Rg.woff') format('woff');
   }
 
-html, body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    width: 100%;
-    font-family: 'Vinque';
-}
-
 .page-container {
     padding: 0;
     box-sizing: border-box;

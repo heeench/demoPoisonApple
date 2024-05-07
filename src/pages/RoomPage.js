@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from "react";
-import '../styles/Room.css';
-import ChatBox from "../Room/ChatBox";
-import DicePanel from "../dice/DicePanel";
-import Map from "../Room/Map";
 import { useParams, useNavigate } from "react-router-dom";
+import '../styles/Room.css';
+import ChatBox from "../Room/Chat/ChatBox";
+import DicePanel from "../Room/Dice/DicePanel";
+import ImageTool from "../Room/Image/ImageTool";
+import Map from "../Room/Map/Map";
 import SockJS from 'sockjs-client';
 import Stomp from 'stompjs';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSkull, faUsers } from "@fortawesome/free-solid-svg-icons";
 import { toast } from 'react-toastify';
-
-
 
 const RoomPage = () => {
   const { roomId } = useParams();
@@ -143,22 +142,6 @@ const RoomPage = () => {
     }
   }, [accessToken, email]);
 
-  
-  useEffect(() => {
-    const handleWheel = (e) => {
-      const target = e.target;
-      const isMapComponent = target.classList.contains('grid-container'); 
-      if (!isMapComponent && e.ctrlKey) {
-        e.preventDefault(); 
-      }
-    };
-
-    window.addEventListener('wheel', handleWheel, { passive: false });
-
-    return () => {    
-      window.removeEventListener('wheel', handleWheel);
-    };
-  }, []);
 
   const homepage = () => {
     navigate('/user');
@@ -176,11 +159,15 @@ const RoomPage = () => {
           <img className='favicon-room' src="../favicon.png" alt="" onClick={homepage} /> 
         </div>
       </div>
+      
       <div className="room-page">
-        <div className="game-area">
-          <div id="grid-container">
-          <Map  roomId={roomId} accessToken={accessToken} />
-          </div>
+      
+        <div className="image-area" onClick={(e) => e.stopPropagation()}>     
+            <ImageTool  roomId={roomId} accessToken={accessToken} />
+            
+        </div>
+        <div className="grid-area">
+          <Map />
         </div>
         <div className="users-list">
           <button className='btn-users-list' onClick={toggleUsersList} titl="Пользователи в комнате">
