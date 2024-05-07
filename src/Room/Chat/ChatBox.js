@@ -1,4 +1,4 @@
-import '../styles/ChatBox.css';
+import '../../styles/ChatBox.css';
 import React, { useState, useEffect } from 'react';
 import SockJS from 'sockjs-client';
 import Stomp from 'stompjs';

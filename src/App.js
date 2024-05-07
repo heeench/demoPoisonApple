@@ -8,6 +8,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Route, BrowserRouter, Navigate, Routes, useLocation } from 'react-router-dom';
 import RoomPage from './pages/RoomPage';
+import Map from './Room/Map/Map';
 
 function App() {
   return (
@@ -29,8 +30,9 @@ function AppContent() {
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path={`/room/:roomId`} element={<RoomPage />} />
+          <Route path='/test' element={<Map/>} />
           <Route path="*" element={<Navigate to="/" />} />
-          </Routes>
+      </Routes>
       {!location.pathname.includes('/room/') && <Navbar />}
       <ToastContainer theme='dark'/>
     </div>

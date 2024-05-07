@@ -1,0 +1,149 @@
+
+.toolbar {
+    background-color: #d14d4d75;
+    backdrop-filter: blur(1px);
+    width: 110px;
+    height: 135px;
+    padding: 10px;
+    position: fixed;
+    z-index: 1000;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    justify-content: center;
+    align-items: center;
+}
+
+.toolbar button {
+    position: relative;
+    font-family: 'Vinque';
+    font-size: 14px;
+    top: -8px;
+    width: 108%;
+    right: 10px;
+    background-color: #c9c4c404;
+    color: rgb(7, 0, 0);
+    border: none;
+    padding: 5px;
+    box-sizing: inherit;
+    border-radius: 10px;
+}
+
+.toolbar button:hover {
+    background-color: #27010a83;
+    border-radius: 10px;
+}
+
+.tokenCreate {
+  background-color: #d14d4d75;
+  backdrop-filter: blur(1px);
+  padding: 5px;
+  width: 165px;
+  height: 95px;
+  border-radius: 10px;
+  position: absolute;
+  top: 120px;
+  left: 120px;
+}
+
+.tokenCreate button {
+  width: 140px;
+  align-items: center;
+  left: 2px;
+  top: 1px;
+  font-size: 14px;
+  padding-bottom: 16px;
+  margin: 5px;
+  border: 0.4px solid rgb(73, 10, 10);
+  height: 5px;
+}
+
+.tokenCreate input {
+  font-family: 'Vinque';
+  height: 20px;
+  border-radius: 10px;
+  border: 0.4px solid rgb(73, 10, 10);
+}
+
+.button-bar {
+  position: absolute;
+  width: 100%;
+  height: 50px;
+  border-bottom: 2px solid #300707ad;
+  z-index: 2;
+  background-color: #200606d0;
+}
+
+.file-upload-container {
+    position: absolute;
+    display: inline-block;
+    margin-bottom: 40px;
+    width: 100%;
+    height: 100%;
+    color: white;
+    top: 2px;
+    z-index: 999;
+    padding-left: 7px;
+  }
+  
+  .file-upload-label {
+    display: inline-block;
+    padding: 2px;
+    color: white;
+    border: 2px solid #0000003d;
+    border-radius: 60px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    border-radius: 50%; 
+    cursor: pointer;
+    width: 34px; 
+    height: 35px;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #460101fd;
+  }
+  
+  .file-upload-label:hover {
+    background-color: #500303;
+  }
+  
+  .file-upload-input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    width: 3%;
+    height: 10%;
+    cursor: pointer;
+    color: white;
+  }
+
+  .file-upload-label::after {
+    content: attr(titl);
+    font-family: 'Vinque';
+    display: none;
+    position: absolute;
+    background-color: #333333da; 
+    color: #fff; 
+    padding: 5px; 
+    border-radius: 5px; 
+    font-size: 14px; 
+    white-space: nowrap; 
+    left: 0;
+    top: 0;
+}
+
+.file-upload-label:hover::after {
+    display: block;
+    left: calc(30% + 1px); 
+    top: calc(80% + 1px);
+}
+
+.gameArea {
+  position: relative;
+  display: -webkit-flex;
+  padding-top: 54px;
+  padding-bottom:1px;
+  padding-left: 4px;
+}

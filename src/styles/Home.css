@@ -1,17 +1,10 @@
-@font-face {
-    font-family: 'Vinque';
-    src: url('../assets/Vinque_Rg.woff') format('woff');
-  }
-
 .homepage-container {
-    font-family: 'Vinque';
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  width: 100%;
+}
+
+.Home {
     min-height: 100vh;
-    min-width: 100vw;
+    background: url('../assets/Home.jpeg');
+    background-size: cover;
     background-position: center;
-    background: url('../assets/фонHome.jpeg') ;
-    background-size:cover;
 }

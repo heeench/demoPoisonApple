@@ -33,14 +33,14 @@ const DiceRoller = ({ sendMessageDice }) => {
   
   
     return (
-      <div className='dice' style={{ backgroundColor: menuOpen ? '#502424a9' : 'transparent', border: menuOpen ? '0.5px solid rgb(21, 8, 30)' : 'none', 
-                                    borderRadius: menuOpen ? '20px' : '', backdropFilter: menuOpen? 'blur(1px)' : '', width: menuOpen? '200px' : '0px',
+      <div className='dice' style={{ backgroundColor: menuOpen ? '#502424a9' : 'transparent', borderRadius: menuOpen ? '20px' : '', 
+                                    backdropFilter: menuOpen? 'blur(1px)' : '', width: menuOpen? '200px' : '0px',
                                     height: menuOpen? '145px' : '0px'}}> 
       <button className='btn-menu' onClick={toggleMenu} titl="Бросить кубики">
         <FontAwesomeIcon className='d20' icon={faDiceD20} />
       </button>
       {menuOpen && (
-        <div className="menu">
+        <div className="menu-dice">
           <label htmlFor="diceType" id="diceType">Выберите тип кубика: </label>
           <select id="diceType" value={selectedDiceType} onChange={handleDiceTypeChange}>
             <option value="d4">d4</option>

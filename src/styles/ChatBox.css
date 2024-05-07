@@ -9,12 +9,12 @@
   right: 0;
   height: 100vh;
   width: 23%;
-  background-color: #050000e0;
+  background-color: #160101e0;
   display: flex;
   flex-direction: column;
-  border: 2px solid rgb(22, 1, 1);
+  border: 2px solid rgba(73, 6, 6, 0.74);
   border-radius: 4px;
-  box-shadow: 0 0 10px rgba(80, 49, 9, 0.2);
+  z-index: 5;
 }
 
 .chat-messages {
@@ -26,12 +26,11 @@
   font-size: 17px;
   font-family: 'Vinque';
   color: azure;
-  border: 2px solid #4126268a;
+  border: 2px solid #ddc4c470;
   margin-top: 2vh;
   margin-left: 0.65vw;
-  box-shadow: 0 0 10px rgba(80, 49, 9, 0.2);
   border-radius: 10px;
-
+  z-index: 5;
 }
 
 .chat-message {
@@ -102,7 +101,7 @@
 }
 
 .chat-container.collapsed {
-  width: 30px; 
+  width: 14px; 
 }
 
 .toggle-button {

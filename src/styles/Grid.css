@@ -1,3 +1,11 @@
-.gborder {
-  border: 2px solid red;
+.grid {
+    position: relative;
+    top: 30px;
+    left: 5px;
+
 }
+
+.game-Area {
+    position: relative;
+}
+

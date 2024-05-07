@@ -2,7 +2,7 @@ import DiceRoller from "./DiceRoller";
 import React, { useState, useEffect } from 'react';
 import SockJS from 'sockjs-client';
 import Stomp from 'stompjs';
-import "../styles/DiceRoll.css"
+import "../../styles/DiceRoll.css"
 
 
 const DicePanel = ({nickname, roomId}) => {
