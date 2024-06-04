@@ -27,7 +27,7 @@ const ChatBox = ({ nickname, roomId }) => {
       const client = Stomp.over(socket);
 
       client.connect({}, () => {
-        console.log('Connected to WebSocket Chat');
+        // console.log('Connected to WebSocket Chat');
         setStompClient(client);
       }, error => {
         console.error('Error connecting to WebSocket Chat:', error);
@@ -36,7 +36,7 @@ const ChatBox = ({ nickname, roomId }) => {
       return () => {
         if (client && client.connected) {
           client.disconnect();
-          console.log('Disconnected from WebSocket Chat');
+          // console.log('Disconnected from WebSocket Chat');
         }
       };
     };

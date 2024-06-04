@@ -1,3 +1,7 @@
+@font-face {
+  font-family: 'Vinque';
+  src: url('../assets/Vinque_Rg.woff') format('woff');
+}
 
 .toolbar {
     background-color: #d14d4d75;
@@ -5,7 +9,7 @@
     width: 110px;
     height: 135px;
     padding: 10px;
-    position: fixed;
+    position: absolute;
     z-index: 1000;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -66,10 +70,10 @@
 
 .button-bar {
   position: absolute;
+  z-index: 999;
   width: 100%;
   height: 50px;
   border-bottom: 2px solid #300707ad;
-  z-index: 2;
   background-color: #200606d0;
 }
 
@@ -77,7 +81,6 @@
     position: absolute;
     display: inline-block;
     margin-bottom: 40px;
-    width: 100%;
     height: 100%;
     color: white;
     top: 2px;
@@ -140,10 +143,352 @@
     top: calc(80% + 1px);
 }
 
+  .DrawMenu {
+    position: absolute;
+    top: -22px;
+    left: 620px;
+    width: 160px;
+    height: 138px;
+    background-color: rgba(61, 11, 11, 0.623);
+    border-radius: 10px;
+    z-index: 999;
+    padding: 5px;
+    display: inline-table;
+    backdrop-filter: blur(2px);
+  }
+
+  .PlainMode {
+    position: relative;
+    color: white;
+    font-family: 'Vinque';
+    top: 2px;
+    width: 100%;
+    border-radius: 10px;
+    border: 1px solid rgb(165, 131, 131);
+    background-color: rgba(73, 14, 14, 0.37);
+  }
+
+  .DiffMode {
+    position: relative;
+    color: white;
+    font-family: 'Vinque';
+    top: 7px;
+    border-radius: 10px;
+    border: 1px solid rgb(165, 131, 131);
+    background-color: rgba(73, 14, 14, 0.514);
+  }
+
+  .EraseMode {
+    position: relative;
+    color: white;
+    font-family: 'Vinque';
+    top: -8px;
+    width: 100%;
+    border-radius: 10px;
+    border: 1px solid rgb(165, 131, 131);
+    background-color: rgba(73, 14, 14, 0.514);
+  }
+
+  .WallMode {
+    position: relative;
+    color: white;
+    font-family: 'Vinque';
+    top: 34px;
+    width: 100%;
+    border-radius: 10px;
+    border: 1px solid rgb(165, 131, 131);
+    background-color: rgba(73, 14, 14, 0.514);
+  }
+
+  .SaveMode {
+    position: relative;
+    color: white;
+    font-family: 'Vinque';
+    top: 18px;
+    width: 100%;
+    border-radius: 10px;
+    border: 1px solid rgb(165, 131, 131);
+    background-color: rgba(73, 14, 14, 0.514);
+  }
+
+  .DrawMode {
+    position: absolute;
+    color: white;
+    font-family: 'Vinque';
+    font-size: 14px;
+    top: 15px;
+    left: 480px;
+    z-index: 8;
+    border-radius: 10px;
+    border: 1px solid rgb(65, 0, 0);
+    background-color: rgba(73, 14, 14, 0.514);
+  }
+  .DrawMode:hover{
+    background-color: rgba(114, 25, 25, 0.514);
+  }
+
+  .DiffMode:hover{
+    background-color: rgba(114, 25, 25, 0.514);
+  }
+
+  .WallMode:hover{
+    background-color: rgba(114, 25, 25, 0.514);
+  }
+
+  .EraseMode:hover{
+    background-color: rgba(114, 25, 25, 0.514);
+  }
+
+  .PlainMode:hover{
+    background-color: rgba(114, 25, 25, 0.514);
+  }
+
+  .plus {
+    position: absolute;
+    left: 145px;
+    top: 2px;
+    color:#f0e9e9;
+  }
+  
+  .minus {
+    position: absolute;
+    right: 140px;
+    top: 2px;
+    color:#f0e9e9;
+  }
+  
+  .gridRange {
+    position: absolute;
+    top: 16px;
+    left: 190px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #f0e9e9;
+    font-family: 'Vinque';
+    font-size: 14px;
+  }
+
+  label {
+    color: #fff;
+  }
+  
+    input[type='range'] {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 10px;
+      background: #c0a7a767;
+      border: 2px solid #460101fd;
+      border-radius: 20px;
+      outline: none;
+      opacity: 0.7;
+      -webkit-transition: .2s;
+      transition: opacity .2s;
+      position: relative;
+      top: 2px;
+    }
+    
+    
+    input[type='range']::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 20px;
+      background: #fdfbf6;
+      cursor: pointer;
+    }
+    
+  
+    input[type='range']::-webkit-slider-thumb:hover {
+      background: #4b0202;
+    }
+  
+    .gridInputWrapper {
+      position: relative;
+  }
+  
+  .switch {
+    position: absolute;
+    display: inline-block;
+    width: 35px;
+    height: 21px;
+    top: 16px;
+    left: 370px;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  .switch-on {
+    position: absolute;
+    display: inline-block;
+    width: 35px;
+    height: 21px;
+    top: 16px;
+    left: 170px;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  .switch input {display:none;}
+  .switch-on input {display:none;}
+
+  .switch1 {
+    position: absolute;
+    cursor: pointer;
+    display: inline-block;
+    width: 35px;
+    height: 21px;
+    top: 16px;
+    left: 420px;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  .switch-on1 {
+    cursor: pointer;
+    position: absolute;
+    display: inline-block;
+    width: 35px;
+    height: 21px;
+    top: 16px;
+    left: 420px;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  .switch1 input {display:none;}
+  .switch-on1 input {display:none;}
+  
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    bottom: 0px;
+    left: 0px;
+    top: 0px;
+    right: 0px;
+    background-color: #c4baba63;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 15px;
+    width: 15px;
+    left: 4px;
+    bottom: 3px;
+    background-color: rgb(250, 250, 250);
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  input:checked + .slider {
+    background-color: #460101fd;
+  }
+  
+  
+  input:checked + .slider:before {
+    -webkit-transform: translateX(23px);
+    -ms-transform: translateX(23px);
+    transform: translateX(16px);
+  }
+  
+  
+  .slider.round {
+    border-radius: 34px;
+  }
+  
+  .slider.round:before {
+    border-radius: 50%;
+  }
+
+  .slider.round1 {
+    border-radius: 34px;
+  }
+  
+  .slider.round1:before {
+    border-radius: 50%;
+  }
+  
+  .gridInputValue {
+      position: absolute;
+      top: -13.5px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 14px;
+      color:#f0e9e9;
+  }
+
+  .gridInput::after {
+    content: attr(titl);
+    font-family: 'Vinque';
+    display: none;
+    position: absolute;
+    background-color: #2e2e2e; 
+    color: #fff; 
+    padding: 5px; 
+    border-radius: 5px; 
+    font-size: 14px; 
+    white-space: nowrap; 
+    left: 0;
+    top: 0;
+  }
+  
+  .gridInput:hover::after {
+    display: block;
+    left: calc(20% + 1px); 
+    top: calc(60% + 1px);
+  }
+  
+  .switch::after {
+    content: attr(titl);
+    font-family: 'Vinque';
+    display: none;
+    position: absolute;
+    background-color: #2e2e2e; 
+    color: #fff; 
+    padding: 5px; 
+    border-radius: 5px; 
+    font-size: 14px; 
+    white-space: nowrap; 
+    left: 0;
+    top: 0;
+  }
+  
+  .switch:hover::after {
+    display: block;
+    left: calc(30% + 1px); 
+    top: calc(60% + 1px);
+  }
+  
+  .switch-on::after {
+    content: attr(titl);
+    font-family: 'Vinque';
+    display: none;
+    position: absolute;
+    background-color: #2e2e2ecc; 
+    color: #fff; 
+    padding: 5px; 
+    border-radius: 5px; 
+    font-size: 14px; 
+    white-space: nowrap;
+    left: 0;
+    top: 0;
+  }
+  
+  .switch-on:hover::after {
+    display: block;
+    left: calc(30% + 1px); 
+    top: calc(60% + 1px);
+  }
+
+
 .gameArea {
   position: relative;
-  display: -webkit-flex;
-  padding-top: 54px;
-  padding-bottom:1px;
-  padding-left: 4px;
+  padding: 5px;
+  z-index: 0;
+  background-color: transparent !important;
 }

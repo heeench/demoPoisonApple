@@ -1,0 +1,127 @@
+  .dice-menu {
+    position: relative;
+    background-color: #290707d1;
+    width: 430px;
+    height: 150px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    border-radius: 20px;
+    color: white;
+    font-size: 18px;
+    top: -42px;
+  }
+  
+  .dice-type {
+    background-color: #644e4e5b;
+    border: 1px solid #460c0c8f;
+    border-radius: 60px;
+    height: 67px;
+  }
+  .rollInput {
+    position: relative;
+    top: 32px;
+  }
+
+  .dice-setting  {
+    position: relative;
+    width: 50px;
+    height: 50px;
+    margin: 5px;
+    border-radius: 30px;
+    border: none;
+    display: inline-block;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    cursor: pointer;
+  }
+  img {
+    position: absolute;
+    display: inline-block;
+    z-index: 999;
+    top: 3px;
+    left: 30px;
+  }
+
+  img:hover {
+    position: relative;
+    z-index: 999;
+    top: -1px;
+    right: 3px;
+    width: 50px;
+    height: 50px;
+  }
+
+  .formula {
+    position: absolute;
+    top: 50px;
+    left: 10px;
+    color: white;
+    width: 400px;
+    height: 20px;
+  }
+
+  .roll {
+    position:absolute;
+    border: none;
+    border-radius: 20px;
+    top: 100px;
+    left: 10px;
+  }
+  .clearRoll {
+    position:absolute;
+    border: none;
+    border-radius: 20px;
+    top: 100px;
+    left: 150px;
+  }
+  .hideRoll {
+    position:absolute;
+    border: none;
+    border-radius: 20px;
+    top: 100px;
+    left: 290px;
+  }
+
+  .activation {
+    background-color: #1d0202dc;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 20px;
+    width: 80%; 
+    height: 30px;
+    position: relative;
+    top: 150px;
+    left: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Vinque';
+  }
+  
+  .activation:hover {
+    background-color: #3d0707dc;
+  }
+  
+  .actcode {
+    font-family: 'Times New Roman', Times, serif;
+    position: absolute;
+    top: 130px;
+    left: 0px;
+    font-size: 18px;
+    color: white;
+    text-align: center
+  }
+
+  .actproc {
+    font-family: 'Times New Roman', Times, serif;
+    position: absolute;
+    top: 149px;
+    left: 0px;
+    font-size: 18px;
+    color: white;
+  }
+  

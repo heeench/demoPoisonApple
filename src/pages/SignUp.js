@@ -39,7 +39,7 @@ function SignUp() {
 
         if (res.ok) {
             const token = await res.text();
-            console.log(token)
+            // console.log(token)
             localStorage.setItem("access_token", token)
             toast.success("Вы успешно прошли регистрацию!")
             setTimeout(() => {

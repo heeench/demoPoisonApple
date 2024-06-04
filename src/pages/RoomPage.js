@@ -2,14 +2,13 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import '../styles/Room.css';
 import ChatBox from "../Room/Chat/ChatBox";
-import DicePanel from "../Room/Dice/DicePanel";
 import ImageTool from "../Room/Image/ImageTool";
-import Map from "../Room/Map/Map";
 import SockJS from 'sockjs-client';
 import Stomp from 'stompjs';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSkull, faUsers } from "@fortawesome/free-solid-svg-icons";
 import { toast } from 'react-toastify';
+import UserSetAPIdddice from "../Room/Dice/UserSetAPIdddice";
 
 const RoomPage = () => {
   const { roomId } = useParams();
@@ -19,6 +18,7 @@ const RoomPage = () => {
   const [accessToken, setAccessToken] = useState('');
   const [stompClient, setStompClient] = useState(null);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [gameMaster, setGameMaster] = useState('');
   const navigate = useNavigate();
   
 
@@ -141,7 +141,29 @@ const RoomPage = () => {
       fetchContent();
     }
   }, [accessToken, email]);
-
+ 
+  useEffect(() => {
+    async function getGameMaster() {
+        try {
+          const res = await fetch(`http://localhost:8080/api/v1/rooms/gameMaster/${roomId}`, {
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${accessToken}`
+            },
+          });
+          if (res.ok) {
+            const json = await res.text();
+            setGameMaster(json);
+          } 
+        } catch (error) {
+          console.error('Произошла ошибка')
+        }
+      }
+    
+      if (accessToken) {
+        getGameMaster();
+      }
+}, [accessToken, roomId]);
 
   const homepage = () => {
     navigate('/user');
@@ -150,7 +172,7 @@ const RoomPage = () => {
   const toggleUsersList = () => {
     setMenuOpen(!menuOpen);
   };
-
+  
 
   return (
     <div className="hom"> 
@@ -162,13 +184,10 @@ const RoomPage = () => {
       
       <div className="room-page">
       
-        <div className="image-area" onClick={(e) => e.stopPropagation()}>     
-            <ImageTool  roomId={roomId} accessToken={accessToken} />
-            
+        <div className="image-area">       
+        <ImageTool roomId={roomId} accessToken={accessToken} />
         </div>
-        <div className="grid-area">
-          <Map />
-        </div>
+        
         <div className="users-list">
           <button className='btn-users-list' onClick={toggleUsersList} titl="Пользователи в комнате">
             <FontAwesomeIcon className='btn-user-list' icon={faUsers} />
@@ -186,7 +205,7 @@ const RoomPage = () => {
         </div>
 
         <div className="dice-area">
-          <DicePanel nickname={nickname} roomId={roomId}/>
+          <UserSetAPIdddice nickname={nickname} roomId={roomId} gameMaster={gameMaster} accessToken={accessToken}/>
         </div>
 
         <div className="chat-area">

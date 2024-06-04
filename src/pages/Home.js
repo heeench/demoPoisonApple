@@ -5,7 +5,7 @@ function Home() {
     return (
         <div className="homepage-container">
             <div className="Home">
-                {/* <h1> Добро пожаловать на сайт TavernOfTravels! </h1> */}
+                {/* <h1> Добро пожаловать на сайт Poison Apple ! </h1> */}
             </div>
         </div>
     )

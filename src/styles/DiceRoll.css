@@ -12,7 +12,7 @@
   justify-content: center;
   align-items: center;
   font-family: 'Vinque';
-  z-index: 5;
+  z-index: 1200;
 }
 
 .menu-dice {
@@ -47,16 +47,16 @@ label {
 }
 
 .roll {
-  background-color: #0e0000;
+  background-color: #1d0202dc;
   color: white;
   border: none;
   cursor: pointer;
   border-radius: 20px;
-  width: 80%; 
+  width: 30%; 
   height: 30px;
   position: relative;
   top: -30px;
-  left: 20px;
+  left: 0px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -64,7 +64,7 @@ label {
 }
 
 .roll:hover {
-  background-color: #1b0101b7;
+  background-color: #3d0707dc;
 }
 
 .d20 {
@@ -111,4 +111,70 @@ label {
   display: block;
   left: calc(30% + 1px); 
   top: calc(80% + 1px);
+}
+
+.canvas {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.dice-panel {
+  position: relative;
+  width: 1000px;
+  height: 2000px;
+}
+
+.clearRoll {
+  background-color: #1d0202dc;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 20px;
+  width: 30%; 
+  height: 30px;
+  position: relative;
+  top: -30px;
+  left: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Vinque';
+}
+
+.clearRoll:hover {
+  background-color: #3d0707dc;
+}
+
+.hideRoll {
+  background-color: #1d0202dc;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 20px;
+  width: 30%; 
+  height: 30px;
+  position: relative;
+  top: -30px;
+  left: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Vinque';
+}
+
+.hideRoll:hover {
+  background-color: #3d0606dc;
+}
+
+#dddice {
+  position: absolute;
+  top: 2px;
+  left: -50px;
+  width: 2px;
+  height: 2px;
+  display:flexbox;
+  pointer-events: none;
 }

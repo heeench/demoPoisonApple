@@ -3,25 +3,28 @@
   src: url('../assets/Vinque_Rg.woff') format('woff');
 }
 
+body {
+ overflow: hidden;
+}
 
 .favicon-room {
   position: relative;
-  left: 10px;
-  transform: translateY(2px);
-  width: 62px;
-  height: 62px;
+  left: 20px;
+  width: 53px;
+  height: 53px;
   cursor: pointer;
   border-radius: 30px;
   margin: 5px;
+  top: -4px;
 }
 
 .favicon-room:active {
-  width: 60px;
-  height: 60px;
+  width: 50px;
+  height: 50px;
 }
 .fav-ico {
   width: 60px;
-  height: 74px;
+  height: 54px;
 }
 
 .fav-ico::after {
@@ -54,20 +57,21 @@
 .users-list {
   position: relative;
   top: 3px;
-
+  z-index: 999;
 }
 
 .btn-users-list:hover {
   background-color: #500303;
+  z-index: 999;
 }
 
 .btn-user-list {
   font-size: 20px;
-  z-index: 5;
+  z-index: 999;
 }
 
 .btn-users-list {
-  z-index: 5;
+  z-index: 999;
   padding: 9px;
   background-color: #460101fd;
   color: white;
@@ -87,7 +91,7 @@
 .btn-user-list {
   position: relative;
   right: 14%;
-
+  z-index: 999;
 }
 
 .btn-users-list::after {
@@ -101,7 +105,7 @@
   border-radius: 5px; 
   font-size: 14px; 
   white-space: nowrap; 
-  z-index: 1;
+  z-index: 999;
   left: 0;
   top: 0;
 }
@@ -113,7 +117,7 @@
 }
 
 .menu-usr {
-  position: relative;
+  position: absolute;
   top:45px;
   left:130px ;
   padding: 5px;
@@ -140,51 +144,13 @@
 
 .room-page {
   position: relative;
-  background: rgba(255, 250, 250, 0);
-  height: 100%;
-  width: 100%; 
-}
-
-.grid-area {
-  position: absolute;
-  width: 100%;
-  background-color: transparent;
-}
-.grid-area {
-  pointer-events: none;
-}
-
-.grid-area .gridRange {
-  pointer-events: auto;
-}
-.grid-area .switch {
-  pointer-events: auto;
-}
-.grid-area .switch-on {
-  pointer-events: auto;
-}
-
-.grid-area .MapTool {
-  pointer-events: painted;
-}
-.grid-area svg {
-  pointer-events: auto;
-}
-
-.grid-area button {
-  pointer-events: auto;
-}
-
-.grid-area button {
-  pointer-events: auto;
 }
 
 .image-area {
   position: absolute;
-  width: 100%;
-  height: 100%;
-  background-color: transparent;
-  
+  top: 0;
+  left: 0;
+  z-index: 999;
 }
 
 .dice-area {
@@ -195,4 +161,5 @@
 .chat-area {
   position: relative;
   width: 100%;
+  z-index: 1001;
 }
