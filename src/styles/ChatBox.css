@@ -99,9 +99,12 @@
   width: 24px; 
   height: auto; 
 }
+.chat-container {
+  transition: width 0.3s ease; /* Плавный переход для ширины */
+}
 
 .chat-container.collapsed {
-  width: 14px; 
+  width: 14px;
 }
 
 .toggle-button {
@@ -119,7 +122,13 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  transition: background-color 0.3s ease; /* Плавный переход для цвета фона */
 }
+
+.toggle-button:hover {
+  background-color: #580202; 
+}
+
 
 .toggle-button:hover {
   position: absolute;
@@ -137,3 +146,4 @@
   justify-content: center;
   align-items: center;
 }
+

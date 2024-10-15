@@ -85,7 +85,7 @@ const ImageItem = React.memo(({
                     x={imgData.x}
                     y={imgData.y - 15}
                     text={imgData.tokenName}
-                    fill='black'
+                    fill='#580606fa'
                     fontSize={16}
                     fontFamily='Vinque'
                 />

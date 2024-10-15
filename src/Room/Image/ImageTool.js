@@ -448,6 +448,7 @@ const ImageTool = ({ roomId, accessToken }) => {
                             lockedImages={lockedImages}
                             setLockedImages={setLockedImages}
                             accessToken={accessToken}
+                            roomId={roomId}
                         />
                     )}
             

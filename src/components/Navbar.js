@@ -1,5 +1,5 @@
 import React, { useEffect, useState} from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import "../styles/Navbar.css"
 import { toast } from 'react-toastify';
 import 'boxicons'
@@ -7,6 +7,7 @@ import 'boxicons'
 const Navbar = () => {
   const [accessToken, setAccessToken] = useState('');
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
       const tokenString = localStorage.getItem('access_token');
@@ -47,17 +48,22 @@ const Navbar = () => {
 
 
   return (
-    <nav className="navbar-links">
-      <img src="../favicon.png" alt="" onClick={homepage} ></img>
-      <ul className="nav-links">
+    <nav className="navbar-links" style={window.location.pathname === '/user' ? ({background: '#2e271e5e',
+      backdropfilter: 'blur(2px)'}) : 
+      (window.localStorage.pathname === '/signin' || window.localStorage.pathname === '/signup') ? ({background: 'white', backdropfilter: 'blur(2px)'}) : ({background: '#2e271e5e', backdropfilter: 'blur(2px)'}) }>
+      <div className="container-logo">
+      <img className="logo" src="../favicon.png" alt="" onClick={homepage} ></img>
+      </div>
+      <ul className="nav-links" >
         {accessToken ? (
           <>
+          {window.location.pathname !== '/user' ? (
             <li className="user-link">
               <Link style={{color: 'white', textDecoration: 'none'}} to="/user">Комнаты</Link>
-             
             </li>
+          ) : null}
             <li className="loqout-link" onClick={logout}>
-              <Link style={{color: 'white', textDecoration: 'none'}} to="/">Выйти</Link>
+              <Link style={{color: 'white', textDecoration: 'none'}} to="/">Выйти из аккаунта</Link>
             </li>
             <box-icon className="icon-logout" name='log-out-circle' color='rgba(255,255,255,.8)' ></box-icon>
             
@@ -75,10 +81,11 @@ const Navbar = () => {
             <box-icon className="icon-signup" name='user-plus' color='rgba(255,255,255,.8)' ></box-icon>
           </>
         )}
+        {window.location.pathname !== '/' ? (
         <li className="home-link">
           <Link style={{color: 'white', textDecoration: 'none'}} to="/">Главная страница</Link>
         </li>
-
+        ) : null}
         
       </ul>
     </nav>

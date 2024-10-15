@@ -13,6 +13,7 @@ const ToolBar = ({
     lockedImages,
     setLockedImages,
     accessToken, 
+    roomId
 }) => {
     
     const [tokenNameInputVisible, setTokenNameInputVisible] = useState(false);
@@ -30,10 +31,36 @@ const ToolBar = ({
         }
     };
     
-    const deleteImage = () => {
-        manipulateImage((updatedImages) => updatedImages);
-        selectShape(null);
+    const deleteImage = async () => {
+        
+        try {
+            const selectedImage = images[selectedId];
+            if (!selectedImage) {
+                console.error('Выбранное изображение не найдено');
+                return;
+            }
+            console.log(selectedImage.name + " " + accessToken);
+            const response = await fetch(`http://localhost:8080/api/images/deleteImage/${roomId}/${selectedImage.name}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${accessToken}`,
+                },
+            });
+    
+            if (response.ok) {
+                manipulateImage((updatedImages) => updatedImages);
+                selectShape(null);
+                toast.success('Изображение удалено');
+            } else {
+                toast.error('Ошибка при удалении изображения');
+            }
+        } catch (error) {
+            console.error('Произошла ошибка:', error);
+            toast.error('Произошла ошибка при удалении изображения');
+        }
     };
+    
 
     const moveImage = (direction) => {
         manipulateImage((updatedImages, movedImage) => {
